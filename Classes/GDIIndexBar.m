@@ -52,8 +52,19 @@
         [self reload];
     }
     self.backgroundColor = [UIColor colorWithRed:1.f green:0.f blue:1.f alpha:1.f];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)deviceOrientationDidChange
+{
+    [self setNeedsLayout];
+}
 
 #pragma mark - Property Setters
 
