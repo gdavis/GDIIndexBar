@@ -60,7 +60,11 @@
     self.data = [NSMutableDictionary dictionary];
     self.sectionNames = [NSMutableArray array];
     
-    NSArray *names = @[@"Liam",
+    NSArray *names = @[
+                       @"!OMG",
+                       @"?",
+                       @"#hashtag",
+                       @"Liam",
                        @"Noah",
                        @"Oliver",
                        @"Adian",

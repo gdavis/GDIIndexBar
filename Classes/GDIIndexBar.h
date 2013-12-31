@@ -23,7 +23,9 @@ typedef enum GDIIndexBarAlignment {
 @property (nonatomic) GDIIndexBarAlignment verticalAlignment;
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (strong, nonatomic) UIView *barBackgroundView;
 
+@property (nonatomic) CGFloat barWidth;
 @property (nonatomic) CGFloat textSpacing;
 @property (nonatomic) NSTextAlignment textAlignment;
 @property (nonatomic) UIOffset textShadowOffset;
@@ -31,6 +33,7 @@ typedef enum GDIIndexBarAlignment {
 @property (strong, nonatomic) UIColor *textColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIColor *textShadowColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 @property (strong, nonatomic) UIFont *textFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *barBackgroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 
 /*!
  * Adjusts the inset of the index bar from the top and right side of the table view.
@@ -70,11 +73,6 @@ typedef enum GDIIndexBarAlignment {
 - (NSString *)stringForIndex:(NSUInteger)index;
 
 @optional
-
-/*!
- * Asks the delegate for the width of the index bar.
- */
-- (CGFloat)widthForIndexBar:(GDIIndexBar *)indexBar;
 
 /*!
  * Informs the delegate the user has touched the index bar at the specified index.
