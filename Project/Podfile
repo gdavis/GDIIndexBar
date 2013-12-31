@@ -1,0 +1,7 @@
+pod "GDIIndexBar", :path => "../GDIIndexBar.podspec"
+
+target "Demo" do
+end
+
+target "DemoTests" do
+end
