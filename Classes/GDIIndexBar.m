@@ -43,7 +43,7 @@
 - (void)initIndexBar
 {
     _verticalAlignment = GDIIndexBarAlignmentCenter;
-    _edgeOffset = UIOffsetMake(10.f, 5.f);
+    _edgeOffset = UIOffsetMake(10.f, 0.f);
     _textShadowOffset = UIOffsetMake(1.f, 1.f);
     _textAlignment = NSTextAlignmentCenter;
     _textSpacing = 2.f;
