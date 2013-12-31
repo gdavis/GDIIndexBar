@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		772CD9B418731A1B00AE98BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9B318731A1B00AE98BC /* Foundation.framework */; };
+		772CD9C218731A1B00AE98BC /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9C118731A1B00AE98BC /* XCTest.framework */; };
+		772CD9C318731A1B00AE98BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9B318731A1B00AE98BC /* Foundation.framework */; };
+		772CD9C518731A1C00AE98BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9C418731A1C00AE98BC /* UIKit.framework */; };
+		772CD9C818731A1C00AE98BC /* libGDIIndexBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9B018731A1B00AE98BC /* libGDIIndexBar.a */; };
+		772CD9CE18731A1C00AE98BC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 772CD9CC18731A1C00AE98BC /* InfoPlist.strings */; };
+		772CD9D018731A1C00AE98BC /* GDIIndexBarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 772CD9CF18731A1C00AE98BC /* GDIIndexBarTests.m */; };
+		772CDA1F1873226A00AE98BC /* GDIIndexBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 772CDA1E1873226A00AE98BC /* GDIIndexBar.m */; };
+		772CDA201873227700AE98BC /* GDIIndexBar.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 772CDA1D1873226A00AE98BC /* GDIIndexBar.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		772CD9C618731A1C00AE98BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 772CD9A818731A1B00AE98BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 772CD9AF18731A1B00AE98BC;
+			remoteInfo = GDIIndexBar;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		772CD9AE18731A1B00AE98BC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				772CDA201873227700AE98BC /* GDIIndexBar.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		772CD9B018731A1B00AE98BC /* libGDIIndexBar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libGDIIndexBar.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		772CD9B318731A1B00AE98BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		772CD9B718731A1B00AE98BC /* GDIIndexBar-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GDIIndexBar-Prefix.pch"; sourceTree = "<group>"; };
+		772CD9C018731A1B00AE98BC /* GDIIndexBarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GDIIndexBarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		772CD9C118731A1B00AE98BC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		772CD9C418731A1C00AE98BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		772CD9CB18731A1C00AE98BC /* GDIIndexBarTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GDIIndexBarTests-Info.plist"; sourceTree = "<group>"; };
+		772CD9CD18731A1C00AE98BC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		772CD9CF18731A1C00AE98BC /* GDIIndexBarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GDIIndexBarTests.m; sourceTree = "<group>"; };
+		772CDA1D1873226A00AE98BC /* GDIIndexBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GDIIndexBar.h; path = ../../../Classes/GDIIndexBar.h; sourceTree = "<group>"; };
+		772CDA1E1873226A00AE98BC /* GDIIndexBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GDIIndexBar.m; path = ../../../Classes/GDIIndexBar.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		772CD9AD18731A1B00AE98BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772CD9B418731A1B00AE98BC /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		772CD9BD18731A1B00AE98BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772CD9C218731A1B00AE98BC /* XCTest.framework in Frameworks */,
+				772CD9C518731A1C00AE98BC /* UIKit.framework in Frameworks */,
+				772CD9C318731A1B00AE98BC /* Foundation.framework in Frameworks */,
+				772CD9C818731A1C00AE98BC /* libGDIIndexBar.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		772CD9A718731A1B00AE98BC = {
+			isa = PBXGroup;
+			children = (
+				772CD9B518731A1B00AE98BC /* GDIIndexBar */,
+				772CD9C918731A1C00AE98BC /* GDIIndexBarTests */,
+				772CD9B218731A1B00AE98BC /* Frameworks */,
+				772CD9B118731A1B00AE98BC /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		772CD9B118731A1B00AE98BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				772CD9B018731A1B00AE98BC /* libGDIIndexBar.a */,
+				772CD9C018731A1B00AE98BC /* GDIIndexBarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		772CD9B218731A1B00AE98BC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				772CD9B318731A1B00AE98BC /* Foundation.framework */,
+				772CD9C118731A1B00AE98BC /* XCTest.framework */,
+				772CD9C418731A1C00AE98BC /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		772CD9B518731A1B00AE98BC /* GDIIndexBar */ = {
+			isa = PBXGroup;
+			children = (
+				772CDA1D1873226A00AE98BC /* GDIIndexBar.h */,
+				772CDA1E1873226A00AE98BC /* GDIIndexBar.m */,
+				772CD9B618731A1B00AE98BC /* Supporting Files */,
+			);
+			path = GDIIndexBar;
+			sourceTree = "<group>";
+		};
+		772CD9B618731A1B00AE98BC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				772CD9B718731A1B00AE98BC /* GDIIndexBar-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		772CD9C918731A1C00AE98BC /* GDIIndexBarTests */ = {
+			isa = PBXGroup;
+			children = (
+				772CD9CF18731A1C00AE98BC /* GDIIndexBarTests.m */,
+				772CD9CA18731A1C00AE98BC /* Supporting Files */,
+			);
+			path = GDIIndexBarTests;
+			sourceTree = "<group>";
+		};
+		772CD9CA18731A1C00AE98BC /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				772CD9CB18731A1C00AE98BC /* GDIIndexBarTests-Info.plist */,
+				772CD9CC18731A1C00AE98BC /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		772CD9AF18731A1B00AE98BC /* GDIIndexBar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 772CD9D318731A1C00AE98BC /* Build configuration list for PBXNativeTarget "GDIIndexBar" */;
+			buildPhases = (
+				772CD9AC18731A1B00AE98BC /* Sources */,
+				772CD9AD18731A1B00AE98BC /* Frameworks */,
+				772CD9AE18731A1B00AE98BC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GDIIndexBar;
+			productName = GDIIndexBar;
+			productReference = 772CD9B018731A1B00AE98BC /* libGDIIndexBar.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		772CD9BF18731A1B00AE98BC /* GDIIndexBarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 772CD9D618731A1C00AE98BC /* Build configuration list for PBXNativeTarget "GDIIndexBarTests" */;
+			buildPhases = (
+				772CD9BC18731A1B00AE98BC /* Sources */,
+				772CD9BD18731A1B00AE98BC /* Frameworks */,
+				772CD9BE18731A1B00AE98BC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				772CD9C718731A1C00AE98BC /* PBXTargetDependency */,
+			);
+			name = GDIIndexBarTests;
+			productName = GDIIndexBarTests;
+			productReference = 772CD9C018731A1B00AE98BC /* GDIIndexBarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		772CD9A818731A1B00AE98BC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "Grant Davis Interactive, LLC";
+			};
+			buildConfigurationList = 772CD9AB18731A1B00AE98BC /* Build configuration list for PBXProject "GDIIndexBar" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 772CD9A718731A1B00AE98BC;
+			productRefGroup = 772CD9B118731A1B00AE98BC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				772CD9AF18731A1B00AE98BC /* GDIIndexBar */,
+				772CD9BF18731A1B00AE98BC /* GDIIndexBarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		772CD9BE18731A1B00AE98BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772CD9CE18731A1C00AE98BC /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		772CD9AC18731A1B00AE98BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772CDA1F1873226A00AE98BC /* GDIIndexBar.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		772CD9BC18731A1B00AE98BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				772CD9D018731A1C00AE98BC /* GDIIndexBarTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		772CD9C718731A1C00AE98BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 772CD9AF18731A1B00AE98BC /* GDIIndexBar */;
+			targetProxy = 772CD9C618731A1C00AE98BC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		772CD9CC18731A1C00AE98BC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				772CD9CD18731A1C00AE98BC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		772CD9D118731A1C00AE98BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		772CD9D218731A1C00AE98BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		772CD9D418731A1C00AE98BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GDIIndexBar.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIIndexBar/GDIIndexBar-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		772CD9D518731A1C00AE98BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/GDIIndexBar.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIIndexBar/GDIIndexBar-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		772CD9D718731A1C00AE98BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIIndexBar/GDIIndexBar-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "GDIIndexBarTests/GDIIndexBarTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		772CD9D818731A1C00AE98BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GDIIndexBar/GDIIndexBar-Prefix.pch";
+				INFOPLIST_FILE = "GDIIndexBarTests/GDIIndexBarTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		772CD9AB18731A1B00AE98BC /* Build configuration list for PBXProject "GDIIndexBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				772CD9D118731A1C00AE98BC /* Debug */,
+				772CD9D218731A1C00AE98BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		772CD9D318731A1C00AE98BC /* Build configuration list for PBXNativeTarget "GDIIndexBar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				772CD9D418731A1C00AE98BC /* Debug */,
+				772CD9D518731A1C00AE98BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		772CD9D618731A1C00AE98BC /* Build configuration list for PBXNativeTarget "GDIIndexBarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				772CD9D718731A1C00AE98BC /* Debug */,
+				772CD9D818731A1C00AE98BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 772CD9A818731A1B00AE98BC /* Project object */;
+}

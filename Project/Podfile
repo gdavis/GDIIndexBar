@@ -1,7 +1,4 @@
+platform :ios, 5.0
+xcodeproj 'GDIIndexBarDemo/GDIIndexBarDemo.xcodeproj'
+
 pod "GDIIndexBar", :path => "../GDIIndexBar.podspec"
-
-target "Demo" do
-end
-
-target "DemoTests" do
-end

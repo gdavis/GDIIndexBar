@@ -1,0 +1,14 @@
+PODS:
+  - GDIIndexBar (0.1.0)
+
+DEPENDENCIES:
+  - GDIIndexBar (from `../GDIIndexBar.podspec`)
+
+EXTERNAL SOURCES:
+  GDIIndexBar:
+    :path: ../GDIIndexBar.podspec
+
+SPEC CHECKSUMS:
+  GDIIndexBar: 79445fe4bf1461f5f9cf35679f6eee602f66925e
+
+COCOAPODS: 0.28.0
