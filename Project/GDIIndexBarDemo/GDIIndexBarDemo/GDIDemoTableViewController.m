@@ -39,6 +39,7 @@
 {
     [super viewDidLoad];
     
+    self.title = @"GDIIndexBar";
     [self createMockData];
     
     self.indexBar = [[GDIIndexBar alloc] initWithTableView:self.tableView];
@@ -69,6 +70,19 @@
                        @"Oliver",
                        @"Adian",
                        @"Asher",
+                       @"Barry",
+                       @"Butch",
+                       @"Chris",
+                       @"Drew",
+                       @"Grant",
+                       @"Kevin",
+                       @"Carl",
+                       @"Katarina",
+                       @"Larissa",
+                       @"Michael",
+                       @"Frank",
+                       @"Ryan",
+                       @"Rebecca",
                        @"Owen",
                        @"Benjamin",
                        @"Declan",
