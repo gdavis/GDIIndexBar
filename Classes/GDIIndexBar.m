@@ -121,7 +121,7 @@
     
         case GDIIndexBarAlignmentCenter:
             origin = CGPointMake(self.superview.frame.size.width - _edgeOffset.horizontal - viewWidth,
-                                 CGRectGetMidY(parentInsetRect) + _edgeOffset.vertical - viewHeight);
+                                 parentInsetRect.size.height * .5 - viewHeight * .5 + _edgeOffset.vertical);
             break;
         
         case GDIIndexBarAlignmentBottom:
@@ -178,7 +178,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
         _indexBarWidth = kDefaultIndexBarWidth;
     }
     
-    _lineHeight = [@"0" sizeWithAttributes:[self textAttributes]].height;
+    _lineHeight = [@"0" sizeWithFont:self.textFont].height;
     
     [self setNeedsLayout];
     [self setNeedsDisplay];
