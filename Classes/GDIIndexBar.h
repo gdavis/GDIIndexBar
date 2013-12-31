@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#pragma mark - GDIIndexBar
+
 typedef enum GDIIndexBarAlignment {
     GDIIndexBarAlignmentTop,
     GDIIndexBarAlignmentCenter,
@@ -47,6 +49,8 @@ typedef enum GDIIndexBarAlignment {
 
 @end
 
+
+#pragma mark - GDIIndexBarDelegate
 
 /*!
  * Defines the behavior of the index bar.

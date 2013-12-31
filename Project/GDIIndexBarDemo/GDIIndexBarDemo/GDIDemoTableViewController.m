@@ -10,8 +10,12 @@
 
 #define kReuseIdentifier @"reuseIdentifier"
 
+
 @interface GDIDemoTableViewController ()
 
+/*!
+ * Stores the index bar we are using for the table view.
+ */
 @property (strong, nonatomic) GDIIndexBar *indexBar;
 
 /*!
@@ -26,11 +30,10 @@
 
 @end
 
+
 @implementation GDIDemoTableViewController
 
-
 #pragma mark - Lifecycle
-
 
 - (void)viewDidLoad
 {
@@ -41,7 +44,6 @@
     self.indexBar = [[GDIIndexBar alloc] initWithTableView:self.tableView];
     self.indexBar.delegate = self;
     [self.view addSubview:self.indexBar];
-    
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kReuseIdentifier];
 }
 
@@ -140,7 +142,15 @@
 
 - (CGFloat)widthForIndexBar:(GDIIndexBar *)indexBar
 {
-    return 25.f;
+    return 20.f;
+}
+
+- (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index
+{
+    NSLog(@"did select section index: %i", index);
+    [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]
+                          atScrollPosition:UITableViewScrollPositionTop
+                                  animated:NO];
 }
 
 #pragma mark - Table view data source

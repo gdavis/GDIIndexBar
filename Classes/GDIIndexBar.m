@@ -9,15 +9,17 @@
 #import "GDIIndexBar.h"
 
 #define kObservingContext @"GDIIndexBarContext"
+#define kObservingKeyPath @"bounds"
 #define kDefaultIndexBarWidth 25.f
 #define kDefaultFontName @"Helvetica"
-#define kDefaultFontSize 10.f
+#define kDefaultFontSize 12.f
 
 @implementation GDIIndexBar {
     NSUInteger _numberOfIndexes;
     CGFloat _indexBarWidth;
     CGFloat _lineHeight;
     NSDictionary *_textAttributes;
+    UITouch *_currentTouch;
 }
 
 #pragma mark - Lifecycle
@@ -66,11 +68,12 @@
 - (void)setTableView:(UITableView *)tableView
 {
     if (_tableView) {
-        [_tableView removeObserver:self forKeyPath:@"bounds" context:kObservingContext];
+        [_tableView removeObserver:self forKeyPath:kObservingKeyPath context:kObservingContext];
     }
     _tableView = tableView;
     if (_tableView) {
-        [tableView addObserver:self forKeyPath:@"bounds" options:0 context:kObservingContext];
+        _tableView.canCancelContentTouches = NO;
+        [tableView addObserver:self forKeyPath:kObservingKeyPath options:0 context:kObservingContext];
     }
 }
 
@@ -81,7 +84,7 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (context == kObservingContext && [keyPath isEqualToString:@"bounds"]) {
+    if (context == kObservingContext && [keyPath isEqualToString:kObservingKeyPath]) {
         [self setNeedsLayout];
     }
 }
@@ -179,18 +182,20 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     if ([self.delegate respondsToSelector:@selector(numberOfIndexesForIndexBar:)]) {
+        
         NSUInteger indexCount = [self.delegate numberOfIndexesForIndexBar:self];
         CGFloat yp = _textSpacing;
+        
         for (int i = 0; i < indexCount; i++) {
             
             NSString *text;
+            // ask delegate for text to show
             if ([self.delegate respondsToSelector:@selector(stringForIndex:)]) {
                 text = [self.delegate stringForIndex:i];
             }
-            else {
-                // use default text values
-                text = [NSString stringWithFormat:@"%i", i];
-            }
+            // otherwise use default text values
+            else text = [NSString stringWithFormat:@"%i", i];
+            
             CGPoint point = CGPointMake(0, yp);
             CGPoint offsetPoint = CGPointAdd(point, CGPointMake(self.textShadowOffset.horizontal, self.textShadowOffset.vertical));
             
@@ -213,6 +218,53 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     }
 }
 
+#pragma mark - Touch Handling
+
+- (BOOL)canBecomeFirstResponder
+{
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (_currentTouch == nil) {
+        _currentTouch = [touches.allObjects lastObject];
+    }
+    [self handleTouch:_currentTouch];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([touches containsObject:_currentTouch]) {
+        [self handleTouch:_currentTouch];
+    }
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([touches containsObject:_currentTouch]) {
+        _currentTouch = nil;
+    }
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if ([touches containsObject:_currentTouch]) {
+        [self handleTouch:_currentTouch];
+        _currentTouch = nil;
+    }
+}
+
+- (void)handleTouch:(UITouch *)touch
+{
+    if ([self.delegate respondsToSelector:@selector(indexBar:didSelectIndex:)]) {
+        CGPoint touchPoint = [touch locationInView:self];
+        CGFloat progress = fmaxf(0.f, fminf(touchPoint.y / self.frame.size.height, 1.f));
+        NSUInteger index = floorf(progress * (_numberOfIndexes-1));
+        [self.delegate indexBar:self didSelectIndex:index];
+    }
+}
+
 
 #pragma mark - Appearance
 
@@ -227,42 +279,39 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return _textAttributes;
 }
 
+
 - (UIColor *)textColor
 {
     if(_textColor == nil) {
         _textColor = [[[self class] appearance] textColor];
     }
-    
     if(_textColor != nil) {
         return _textColor;
     }
-    
     return [UIColor whiteColor];
 }
+
 
 - (UIColor *)textShadowColor
 {
     if(_textShadowColor == nil) {
         _textShadowColor = [[[self class] appearance] textColor];
     }
-    
     if(_textShadowColor != nil) {
         return _textShadowColor;
     }
-    
     return [UIColor blackColor];
 }
+
 
 - (UIFont *)textFont
 {
     if (_textFont == nil) {
         _textFont = [[[self class] appearance] textFont];
     }
-    
     if (_textFont != nil) {
         return _textFont;
     }
-    
     return [UIFont fontWithName:kDefaultFontName size:kDefaultFontSize];
 }
 
