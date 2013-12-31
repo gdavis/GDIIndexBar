@@ -21,7 +21,7 @@ typedef enum GDIIndexBarAlignment {
 @interface GDIIndexBar : UIView
 
 @property (nonatomic) GDIIndexBarAlignment verticalAlignment;
-@property (weak, nonatomic) id <GDIIndexBarDelegate> delegate;
+@property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (nonatomic) CGFloat textSpacing;
