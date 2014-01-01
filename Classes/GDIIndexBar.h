@@ -67,6 +67,11 @@ typedef enum {
  */
 - (void)reload;
 
+/*!
+ * Defines the rectangle the GDIIndexBar will set as its frame when `layoutSubviews` is called.
+ * @discussion This method is not intended to be called directly. Instead, it is meant to be overridden by subclasses to provide a new frame for the `GDIIndexBar`.
+ */
+- (CGRect)rectForIndexBarFrame;
 
 /*!
  * Defines the frame for the text within the GDIIndexBar's bounds.

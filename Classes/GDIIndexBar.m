@@ -157,24 +157,7 @@
 {
     [super layoutSubviews];
     
-    CGPoint relativeTableViewTopRightPoint = [_tableView convertPoint:CGPointMake(_tableView.frame.size.width, 0)
-                                                               toView:self.superview];
-    
-    CGPoint origin = CGPointMake(relativeTableViewTopRightPoint.x - _barWidth,
-                                 relativeTableViewTopRightPoint.y + _tableView.contentOffset.y);
-    
-    CGFloat height = _tableView.frame.size.height;
-    
-    // here we check if our parent view is a scroll view, and if it is,
-    // add its offset and insets to our origin to keep it fixed
-    if ([self.superview isKindOfClass:[UIScrollView class]]) {
-        UIScrollView *scrollView = (UIScrollView *)self.superview;
-        origin = CGPointAdd(origin, CGPointMake(0, scrollView.contentInset.top));
-        height -= (scrollView.contentInset.top + scrollView.contentInset.bottom);
-    }
-    
-    CGSize size = CGSizeMake(_barWidth, height);
-    self.frame = (CGRect){ origin, size };
+    self.frame = [self rectForIndexBarFrame];
     self.barBackgroundView.frame = [self rectForBarBackgroundView];
     
     // when our parent view is a table, make sure we are always on top.
@@ -192,15 +175,30 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 };
 
 
+- (CGRect)rectForIndexBarFrame
+{
+    CGPoint relativeTableViewTopRightPoint = [_tableView convertPoint:CGPointMake(_tableView.frame.size.width, 0)
+                                                               toView:self.superview];
+    CGPoint origin = CGPointMake(relativeTableViewTopRightPoint.x - _barWidth,
+                                 relativeTableViewTopRightPoint.y + _tableView.contentOffset.y + _tableView.contentInset.top);
+    
+    CGFloat height = _tableView.frame.size.height - (_tableView.contentInset.top + _tableView.contentInset.bottom);
+    
+    CGSize size = CGSizeMake(_barWidth, height);
+    return (CGRect){ origin, size };
+}
+
+
 - (CGRect)rectForTextArea
 {
     CGFloat indexRowHeight = _textSpacing + _lineHeight;
     CGFloat height = indexRowHeight * [self numberOfDisplayableRows] + _textSpacing * 2;
-    CGRect parentInsetRect = self.superview.frame;
+    CGRect parentInsetRect = [_tableView.superview convertRect:_tableView.frame
+                                                        toView:self.superview];
     
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)self.superview;
-        parentInsetRect = UIEdgeInsetsInsetRect(self.superview.frame, scrollView.contentInset);
+        parentInsetRect = UIEdgeInsetsInsetRect(scrollView.frame, scrollView.contentInset);
     }
     
     CGFloat yp;
@@ -215,7 +213,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
             
         case GDIIndexBarAlignmentCenter:
         default:
-            yp = parentInsetRect.size.height * .5 - height * .5 + _textOffset.vertical;
+            yp = self.bounds.size.height * .5 - height * .5 + _textOffset.vertical;
             break;
     }
 
