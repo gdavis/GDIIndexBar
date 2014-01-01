@@ -455,12 +455,12 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 - (BOOL)isOS7OrLater
 {
-    static BOOL _isOS7OrLater;
+    static BOOL isOS7OrLater;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _isOS7OrLater = !(floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1);
+        isOS7OrLater = !(floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1);
     });
-    return _isOS7OrLater;
+    return isOS7OrLater;
 }
 
 @end
