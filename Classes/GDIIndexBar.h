@@ -66,6 +66,19 @@ typedef enum GDIIndexBarAlignment {
  */
 - (void)reload;
 
+
+/*!
+ * Defines the frame for the text within the GDIIndexBar's bounds.
+ * @discussion This method is not intended to be called directly. Instead, it is meant to be overridden by subclasses to provide a new frame for the text area.
+ */
+- (CGRect)rectForTextArea;
+
+/*!
+ * Defines the frame for the bar background view within the GDIIndexBar's bounds. Available for override.
+ * @discussion This method is not intended to be called directly. Instead, it is meant to be overridden by subclasses to provide a new frame for the bar background view.
+ */
+- (CGRect)rectForBarBackgroundView;
+
 @end
 
 
