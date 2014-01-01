@@ -1,14 +1,58 @@
 # GDIIndexBar
 
-[![iOS7 Screenshot](http://f.cl.ly/items/1a3Z0T3A2X1x0W023W2R/GDIIndexBar-1.png)]
-[![iOS6 Screenshot](http://f.cl.ly/items/2x2H2x0A3T3k0i3y0p1i/GDIIndexBar-2.png)]
+<table>
+  <tr>
+    <td>
+      <img src="http://f.cl.ly/items/1a3Z0T3A2X1x0W023W2R/GDIIndexBar-1.png" alt="iOS7 Screenshot" width="320px">
+    </td>
+    <td>
+      <img src="http://f.cl.ly/items/2x2H2x0A3T3k0i3y0p1i/GDIIndexBar-2.png" alt="iOS7 Screenshot" width="320px">
+    </td>
+  </tr>
+</table>
 
+`GDIIndexBar` is a component for navigating sections of a `UITableView`. It reproduces the index bar seen in the Contacts app on iOS and styled to match both iOS6 and iOS7 by default. `GDIIndexBar` can also be customized through the appearance protocol or by subclassing. 
 
 ## Usage
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
 
 The example project contains two example view controllers. One demonstrates a `UITableViewController` subclass, and the other is a `UIViewController` that manages a `UITableView` and `GDIIndexBar` as subviews of the main view. 
+
+### Instantiation
+
+GDIIndexBar can be instantiated through code or by setting outlets with Interface Builder. See the example project for examples of both. 
+
+Code Example:
+
+    - (void)viewDidLoad
+    {
+      [super viewDidLoad];
+      
+      GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:tableView];
+      indexBar.delegate = self;
+      [self.view addSubview:indexBar];
+    }
+    
+    #pragma marka - Index bar delegate
+
+    - (NSUInteger)numberOfIndexesForIndexBar:(GDIIndexBar *)indexBar
+    {
+        return self.dataModel.sectionNames.count;
+    }
+
+    - (NSString *)stringForIndex:(NSUInteger)index
+    {
+        return [self.dataModel.sectionNames objectAtIndex:index];
+    }
+
+    - (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index
+    {
+        [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]
+                              atScrollPosition:UITableViewScrollPositionTop
+                                      animated:NO];
+    }
+    
 
 ## Requirements
 
