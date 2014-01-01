@@ -69,7 +69,12 @@
     if ([newSuperview isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)newSuperview;
         scrollView.delaysContentTouches = NO;
+        [scrollView addObserver:self forKeyPath:kObservingKeyPath options:0 context:kObservingContext];
         NSLog(@"[GDIIndexBar] WARNING: Adding a GDIIndexBar as a subview of a UIScrollView will cause `delaysContentTouches` to be set to `NO`.");
+    }
+    if (newSuperview == nil && [self.superview isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)self.superview;
+        [scrollView removeObserver:self forKeyPath:kObservingKeyPath context:kObservingContext];
     }
 }
 
@@ -102,18 +107,6 @@
         [self reload];
     }
 }
-
-- (void)setTableView:(UITableView *)tableView
-{
-    if (_tableView) {
-        [_tableView removeObserver:self forKeyPath:kObservingKeyPath context:kObservingContext];
-    }
-    _tableView = tableView;
-    if (_tableView) {
-        [tableView addObserver:self forKeyPath:kObservingKeyPath options:0 context:kObservingContext];
-    }
-}
-
 
 #pragma mark - Observing scroll view changes
 
