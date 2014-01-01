@@ -164,10 +164,11 @@
 {
     [super layoutSubviews];
     
-    CGPoint relativeTableViewTopRightPoint = [self.superview convertPoint:CGPointMake(_tableView.frame.origin.x + _tableView.frame.size.width, 0)
-                                                                 fromView:_tableView];
+    CGPoint relativeTableViewTopRightPoint = [_tableView convertPoint:CGPointMake(_tableView.frame.size.width, 0)
+                                                               toView:self.superview];
+    
     CGPoint origin = CGPointMake(relativeTableViewTopRightPoint.x - _barWidth,
-                                 relativeTableViewTopRightPoint.y);
+                                 relativeTableViewTopRightPoint.y + _tableView.contentOffset.y);
     
     CGFloat height = _tableView.frame.size.height;
     
@@ -175,7 +176,6 @@
     // add its offset and insets to our origin to keep it fixed
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)self.superview;
-        origin = CGPointAdd(origin, scrollView.contentOffset);
         origin = CGPointAdd(origin, CGPointMake(0, scrollView.contentInset.top));
         height -= (scrollView.contentInset.top + scrollView.contentInset.bottom);
     }
