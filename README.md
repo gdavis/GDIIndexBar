@@ -15,7 +15,7 @@
 
 `GDIIndexBar` behaves by automatically sizing and positioning itself on the right side of the provided `UITableView`. Subclasses can alter this by overriding the `layoutSubviews` method of the `GDIIndexBar`. `GDIIndexBar` provides automatic vertical adjustments for the index bar by setting a `GDIIndexBarAlignment` value. 
 
-`GDIIndexBar` is supports being added directly to a `UITableView` as a child subview, or can exist in a different view than the table while still positioning automatically. 
+`GDIIndexBar` is supports being added directly to a `UITableView` as a child subview, or can exist in a different view than the table while still positioning automatically. *NOTE:* In order to correctly receive touch events as a subview of a `UITableView`, the `delaysContentTouches` property is automatically set to `NO`.
 
 ## Usage
 
