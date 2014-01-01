@@ -122,7 +122,7 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (context == kObservingContext && [keyPath isEqualToString:kObservingKeyPath]) {
+    if (context == kObservingContext && [keyPath isEqualToString:kObservingKeyPath] && self.superview == _tableView) {
         [self setNeedsLayout];
     }
 }
