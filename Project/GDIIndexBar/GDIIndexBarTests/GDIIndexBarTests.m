@@ -15,6 +15,12 @@
 
 @end
 
+
+@interface GDIIndexBarMockDelegate : NSObject <GDIIndexBarDelegate>
+@property (strong, nonatomic) NSArray *indexStrings;
+@end
+
+
 @implementation GDIIndexBarTests
 
 - (void)setUp
@@ -68,6 +74,30 @@
     [[GDIIndexBar appearance] setBarBackgroundColor:[UIColor orangeColor]];
     GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
     XCTAssertTrue([indexBar.barBackgroundColor isEqual:[UIColor orangeColor]], @"Bar background color does not match color set by appearance protocol");
+}
+
+- (void)testDelegateEqualToMockDelegate
+{
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
+    GDIIndexBarMockDelegate *delegate = [[GDIIndexBarMockDelegate alloc] init];
+    indexBar.delegate = delegate;
+    XCTAssertNotNil(indexBar.delegate, @"Delegate should not be nil");
+    XCTAssertEqual(indexBar.delegate, delegate, @"Delegate should be equal to the mock delegate");
+}
+
+@end
+
+
+@implementation GDIIndexBarMockDelegate
+
+- (NSUInteger)numberOfIndexesForIndexBar:(GDIIndexBar *)indexBar
+{
+    return self.indexStrings.count;
+}
+
+- (NSString *)stringForIndex:(NSUInteger)index
+{
+    return [self.indexStrings objectAtIndex:index];
 }
 
 @end
