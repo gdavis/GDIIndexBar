@@ -85,6 +85,27 @@
     XCTAssertEqual(indexBar.delegate, delegate, @"Delegate should be equal to the mock delegate");
 }
 
+- (void)testTopVerticalAlignment
+{
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
+    indexBar.verticalAlignment = GDIIndexBarAlignmentTop;
+    XCTAssertEqual(indexBar.verticalAlignment, GDIIndexBarAlignmentTop, @"Vertical alignemnt does not equal top alignment.");
+}
+
+- (void)testCenterVerticalAlignment
+{
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
+    indexBar.verticalAlignment = GDIIndexBarAlignmentCenter;
+    XCTAssertEqual(indexBar.verticalAlignment, GDIIndexBarAlignmentCenter, @"Vertical alignemnt does not equal center alignment.");
+}
+
+- (void)testBottomVerticalAlignment
+{
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
+    indexBar.verticalAlignment = GDIIndexBarAlignmentBottom;
+    XCTAssertEqual(indexBar.verticalAlignment, GDIIndexBarAlignmentBottom, @"Vertical alignemnt does not equal bottom alignment.");
+}
+
 @end
 
 
