@@ -33,7 +33,7 @@ The example project contains two example view controllers. One demonstrates a `U
     
 ### Providing Data
 
-To correctly display an index bar its delegate must implement the `numberOfIndexesForIndexBar:` and `stringForIndex:` methods. 
+To correctly display an index bar its delegate must implement the `numberOfIndexesForIndexBar:` and `stringForIndex:` methods of the `<GDIIndexBarDelegate>` protocol. 
 
     - (NSUInteger)numberOfIndexesForIndexBar:(GDIIndexBar *)indexBar
     {
@@ -56,7 +56,7 @@ To respond to index bar touches, the delegate should implement the following del
     
 ### Styling
 
-`GDIIndexBar` can be customized by setting properties for text, text shadow, font, and bar background. A custom bar background view can also be provided using the `barBackgroundView` property. Offsets can also be provided for the text and bar background by setting the `textOffset` and `barBackgroundOffset` values, respectively. 
+`GDIIndexBar` can be customized by setting properties for the text font, text color, text shadow color, and the bar background color and width. A custom bar background view can also be provided using the `barBackgroundView` property. Offsets can also be provided for the text and bar background by setting the `textOffset` and `barBackgroundOffset` values, respectively. 
 
 Below are examples of styling the index bar through the appearance protocol. 
 
