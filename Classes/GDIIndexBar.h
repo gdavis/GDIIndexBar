@@ -25,9 +25,20 @@ typedef enum GDIIndexBarAlignment {
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) UIView *barBackgroundView;
 
+/*!
+ * Property is used for determining the width of the hit area for the control.
+ * @discussion This value must be greater than or equal to the `barBackgroundWidth` value.
+ */
 @property (nonatomic) CGFloat barWidth;
+
+/*!
+ * Property used to determine the width of the bar background view. 
+ * @discussion This value should be less than or equal to the `barWidth` value. This value is applied to the background view position.
+ */
+@property (nonatomic) CGFloat barBackgroundWidth;
+@property (nonatomic) UIOffset barBackgroundOffset;
+
 @property (nonatomic) CGFloat textSpacing;
-@property (nonatomic) NSTextAlignment textAlignment;
 @property (nonatomic) UIOffset textShadowOffset;
 
 @property (strong, nonatomic) UIColor *textColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
@@ -36,9 +47,9 @@ typedef enum GDIIndexBarAlignment {
 @property (strong, nonatomic) UIColor *barBackgroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
 
 /*!
- * Adjusts the inset of the index bar from the top and right side of the table view.
+ * Offsets the position of the text drawing.
  */
-@property (nonatomic) UIOffset edgeOffset;
+@property (nonatomic) UIOffset textOffset;
 
 /*!
  * Initializes the index bar with an associated table view.

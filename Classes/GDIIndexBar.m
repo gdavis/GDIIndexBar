@@ -10,11 +10,13 @@
 
 #define kObservingContext @"GDIIndexBarContext"
 #define kObservingKeyPath @"bounds"
-#define kDefaultIndexBarWidth 25.f
-#define kDefaultFontName @"Helvetica"
-#define kDefaultFontSize 12.f
+#define kDefaultBarBackgroundWidth 25.f
+#define kDefaultBarBackgroundWidthiOS7 15.f
+#define kDefaultFontName @"HelveticaNeue-Bold"
+#define kDefaultFontSize 11.f
+#define kDefaultTextSpacing 2.f
 #define kStandardButtonWidth 44.f
-#define kShowDebugOutlines 1
+#define kShowDebugOutlines 0
 
 @implementation GDIIndexBar {
     NSUInteger _numberOfIndexes;
@@ -45,23 +47,10 @@
 
 - (void)initIndexBar
 {
-    _verticalAlignment = GDIIndexBarAlignmentCenter;
-    _edgeOffset = UIOffsetMake(-3, 0);
-    _textShadowOffset = UIOffsetMake(1.f, 1.f);
-    _textAlignment = NSTextAlignmentCenter;
-    _textSpacing = 2.f;
-    _barWidth = kDefaultIndexBarWidth;
-    _barBackgroundColor = [UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:.9f];
     self.exclusiveTouch = YES;
     self.multipleTouchEnabled = NO;
     
-#if kShowDebugOutlines
-    self.layer.borderColor = [UIColor redColor].CGColor;
-    self.layer.borderWidth = .5f;
-    self.backgroundColor = [UIColor colorWithRed:1.f green:0.f blue:1.f alpha:.2f];
-#else
-    self.backgroundColor = [UIColor clearColor];
-#endif
+    [self applyDefaultStyle];
     
     if (_tableView && _delegate) {
         [self reload];
@@ -73,11 +62,6 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)deviceOrientationDidChange
-{
-    [self setNeedsLayout];
 }
 
 - (void)willMoveToSuperview:(UIView *)newSuperview
@@ -110,6 +94,7 @@
     
     [self setNeedsLayout];
 }
+
 
 #pragma mark - Property Setters
 
@@ -177,11 +162,13 @@
     }
 }
 
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    CGPoint relativeTableViewTopRightPoint = [self.superview convertPoint:CGPointMake(_tableView.frame.size.width, 0) fromView:_tableView];
+    CGPoint relativeTableViewTopRightPoint = [self.superview convertPoint:CGPointMake(_tableView.frame.origin.x + _tableView.frame.size.width, 0)
+                                                                 fromView:_tableView];
     CGPoint origin = CGPointMake(relativeTableViewTopRightPoint.x - _barWidth,
                                  relativeTableViewTopRightPoint.y);
     
@@ -198,7 +185,7 @@
     
     CGSize size = CGSizeMake(_barWidth, height);
     self.frame = (CGRect){ origin, size };
-    self.barBackgroundView.frame = [self rectForTextArea];
+    self.barBackgroundView.frame = [self rectForBarBackgroundView];
     
     // when our parent view is a table, make sure we are always on top.
     // fix fixes issues where header views can be placed on top of the index bar.
@@ -229,22 +216,40 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     CGFloat yp;
     switch (_verticalAlignment) {
         case GDIIndexBarAlignmentTop:
-            yp = _edgeOffset.vertical;
+            yp = _textOffset.vertical;
             break;
         
         case GDIIndexBarAlignmentBottom:
-            yp = self.frame.size.height - _edgeOffset.vertical - height;
+            yp = self.frame.size.height - _textOffset.vertical - height;
             break;
             
         case GDIIndexBarAlignmentCenter:
         default:
-            yp = parentInsetRect.size.height * .5 - height * .5 + _edgeOffset.vertical;
+            yp = parentInsetRect.size.height * .5 - height * .5 + _textOffset.vertical;
             break;
     }
 
     yp = fmaxf(0.f, yp);
     
     return CGRectMake(0, yp, _barWidth, height);
+}
+
+
+- (CGRect)rectForBarBackgroundView
+{
+    if ([self isOS7OrLater]) {
+        
+        return CGRectMake(_barWidth * .5 - _barBackgroundWidth * .5 + _barBackgroundOffset.horizontal,
+                          0,
+                          _barBackgroundWidth,
+                          self.frame.size.height);
+    }
+    
+    CGRect textAreaRect = [self rectForTextArea];
+    return CGRectMake(_barWidth * .5 - _barBackgroundWidth * .5 + _barBackgroundOffset.horizontal,
+                      textAreaRect.origin.y + _barBackgroundOffset.vertical,
+                      _barBackgroundWidth,
+                      textAreaRect.size.height);
 }
 
 
@@ -260,6 +265,12 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 }
 
 
+- (void)deviceOrientationDidChange
+{
+    [self setNeedsLayout];
+}
+
+
 #pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
@@ -267,10 +278,11 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     [super drawRect:rect];
     [self updateDisplayedIndexStrings];
     
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
     NSUInteger indexCount = _displayedIndexStrings.count;
+    CGRect barBackgroundRect = [self rectForBarBackgroundView];
     CGRect textAreaRect = [self rectForTextArea];
-    CGFloat yp = _textSpacing + textAreaRect.origin.y + _edgeOffset.vertical;
+    CGFloat yp = _textSpacing + textAreaRect.origin.y + _textOffset.vertical;
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
     
     // draw debug box for text area
 #if kShowDebugOutlines
@@ -279,25 +291,25 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     CGContextStrokeRect(ctx, textAreaRect);
 #endif
     
+    CGContextTranslateCTM(ctx, barBackgroundRect.origin.x, barBackgroundRect.origin.y);
+    [self.barBackgroundView.layer renderInContext:ctx];
+    CGContextTranslateCTM(ctx, -barBackgroundRect.origin.x, -barBackgroundRect.origin.y);
+    
     for (int i = 0; i < indexCount; i++) {
         NSString *text = [_displayedIndexStrings objectAtIndex:i];
         CGSize textSize = [text sizeWithFont:self.textFont];
-        CGPoint point = CGPointMake(rect.size.width * .5 - textSize.width * .5 + _edgeOffset.horizontal, yp);
+        CGPoint point = CGPointMake(rect.size.width * .5 - textSize.width * .5 + _textOffset.horizontal, yp);
         CGPoint shadowPoint = CGPointAdd(point, CGPointMake(self.textShadowOffset.horizontal, self.textShadowOffset.vertical));
         
         // draw shadow color
         [self.textShadowColor set];
         [text drawInRect:CGRectMake(shadowPoint.x, shadowPoint.y, textSize.width, _lineHeight)
-                withFont:self.textFont
-           lineBreakMode:NSLineBreakByClipping
-               alignment:_textAlignment];
+                withFont:self.textFont];
         
         // draw normal color
         [self.textColor set];
         [text drawInRect:CGRectMake(point.x, point.y, textSize.width, _lineHeight)
-                withFont:self.textFont
-           lineBreakMode:NSLineBreakByClipping
-               alignment:_textAlignment];
+                withFont:self.textFont];
         
         yp += _lineHeight + _textSpacing;
     }
@@ -349,6 +361,35 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 #pragma mark - Appearance
 
+- (void)applyDefaultStyle
+{
+#if kShowDebugOutlines
+    self.layer.borderColor = [UIColor redColor].CGColor;
+    self.layer.borderWidth = .5f;
+    self.backgroundColor = [UIColor colorWithRed:1.f green:0.f blue:1.f alpha:.2f];
+#else
+    self.backgroundColor = [UIColor clearColor];
+#endif
+    
+    _verticalAlignment = GDIIndexBarAlignmentCenter;
+    _textShadowOffset = UIOffsetZero;
+    _textSpacing = kDefaultTextSpacing;
+    _barWidth = kStandardButtonWidth;
+    
+    if ([self isOS7OrLater]) {
+        _textOffset =
+        _barBackgroundOffset = UIOffsetMake(14.5f, 0.f);
+        _barBackgroundWidth = kDefaultBarBackgroundWidthiOS7;
+        _barBackgroundColor = [UIColor colorWithWhite:1.f alpha:.9f];
+    }
+    else {
+        _textOffset = UIOffsetZero;
+        _barBackgroundOffset = UIOffsetZero;
+        _barBackgroundColor = [UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:.9f];
+        _barBackgroundWidth = kDefaultBarBackgroundWidth;
+    }
+}
+
 - (UIColor *)textColor
 {
     if(_textColor == nil) {
@@ -357,7 +398,10 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     if(_textColor != nil) {
         return _textColor;
     }
-    return [UIColor whiteColor];
+    if ([self isOS7OrLater]) {
+        return self.superview.tintColor;
+    }
+    return [UIColor grayColor];
 }
 
 - (UIColor *)textShadowColor
@@ -368,7 +412,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     if(_textShadowColor != nil) {
         return _textShadowColor;
     }
-    return [UIColor blackColor];
+    return [UIColor clearColor];
 }
 
 - (UIFont *)textFont
@@ -389,6 +433,17 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
         _barBackgroundView.backgroundColor = self.barBackgroundColor;
     }
     return _barBackgroundView;
+}
+
+
+- (BOOL)isOS7OrLater
+{
+    static BOOL _isOS7OrLater;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _isOS7OrLater = !(floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1);
+    });
+    return _isOS7OrLater;
 }
 
 @end
