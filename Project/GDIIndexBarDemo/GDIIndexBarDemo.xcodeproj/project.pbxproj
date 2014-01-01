@@ -120,11 +120,11 @@
 			children = (
 				772CD9F418731BC300AE98BC /* GDIAppDelegate.h */,
 				772CD9F518731BC300AE98BC /* GDIAppDelegate.m */,
+				772CDA1A18731E3800AE98BC /* GDIDemoTableViewController.h */,
+				772CDA1B18731E3800AE98BC /* GDIDemoTableViewController.m */,
 				772CD9F718731BC300AE98BC /* Main.storyboard */,
 				772CD9FD18731BC300AE98BC /* Images.xcassets */,
 				772CD9EC18731BC300AE98BC /* Supporting Files */,
-				772CDA1A18731E3800AE98BC /* GDIDemoTableViewController.h */,
-				772CDA1B18731E3800AE98BC /* GDIDemoTableViewController.m */,
 			);
 			path = GDIIndexBarDemo;
 			sourceTree = "<group>";

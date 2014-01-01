@@ -165,7 +165,6 @@
 
 - (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index
 {
-    NSLog(@"did select section index: %i", index);
     [self.tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:index]
                           atScrollPosition:UITableViewScrollPositionTop
                                   animated:NO];
