@@ -27,6 +27,7 @@ typedef enum {
 
 /*!
  * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar.
+ * @discussion Defaults to YES for iOS7 devices, and NO for iOS6.
  */
 @property (nonatomic) BOOL alwaysShowBarBackground;
 
