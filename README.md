@@ -1,6 +1,6 @@
 # GDIIndexBar
 
-<table>
+<table cellspacing="0" cellpadding="10px">
   <tr>
     <td>
       <img src="http://f.cl.ly/items/1a3Z0T3A2X1x0W023W2R/GDIIndexBar-1.png" alt="iOS7 Screenshot" width="320px">
