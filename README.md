@@ -1,4 +1,4 @@
-# GDIIndexBar
+# GDIIndexBar - A custom index bar for iOS
 
 <table cellspacing="0" cellpadding="10px">
   <tr>
