@@ -21,20 +21,15 @@ The example project contains two example view controllers. One demonstrates a `U
 
 ### Instantiation
 
-GDIIndexBar can be instantiated through code or by setting outlets with Interface Builder. See the example project for examples of both. 
+`GDIIndexBar` can be instantiated through code or by setting outlets with Interface Builder. See the example project to view an example IB-only implementation. Below is an example of of instantiating an index bar from a view controller's `viewDidLoad` method:
 
-Code Example:
-
-    - (void)viewDidLoad
-    {
-      [super viewDidLoad];
-      
-      GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:tableView];
-      indexBar.delegate = self;
-      [self.view addSubview:indexBar];
-    }
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:tableView];
+    indexBar.delegate = self;
+    [self.view addSubview:indexBar];
     
-    #pragma marka - Index bar delegate
+### Providing Data
+
+To correctly display an index bar its delegate must implement the `numberOfIndexesForIndexBar:` and `stringForIndex:` methods. 
 
     - (NSUInteger)numberOfIndexesForIndexBar:(GDIIndexBar *)indexBar
     {
@@ -45,6 +40,8 @@ Code Example:
     {
         return [self.dataModel.sectionNames objectAtIndex:index];
     }
+    
+To respond to index bar touches, the delegate should implement the following delegate method and tell the table view to scroll sections:
 
     - (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index
     {
