@@ -1,24 +1,19 @@
-#
-# Be sure to run `pod spec lint NAME.podspec' to ensure this is a
-# valid spec and remove all comments before submitting the spec.
-#
-# To learn more about the attributes see http://docs.cocoapods.org/specification.html
-#
 Pod::Spec.new do |s|
   s.name         = "GDIIndexBar"
   s.version      = "0.1.0"
-  s.summary      = "A short description of GDIIndexBar."
+  s.summary      = "`GDIIndexBar` is a component for navigating sections of a `UITableView`."
   s.description  = <<-DESC
-                    An optional longer description of GDIIndexBar
+                    `GDIIndexBar` is a component for navigating sections of a `UITableView`. It reproduces the index bar seen in the Contacts app on iOS and styled to match both iOS6 and iOS7 by default. `GDIIndexBar` can also be customized through the appearance protocol or by subclassing. 
 
-                    * Markdown format.
-                    * Don't worry about the indent, we strip it!
+                    `GDIIndexBar` behaves by automatically sizing and positioning itself on the right side of the provided `UITableView`. Subclasses can alter this by overriding the `layoutSubviews` method of the `GDIIndexBar`. `GDIIndexBar` provides automatic vertical adjustments for the index bar by setting a `GDIIndexBarAlignment` value. 
+
+                    `GDIIndexBar` is supports being added directly to a `UITableView` as a child subview, or can exist in a different view than the table while still positioning automatically. *NOTE:* In order to correctly receive touch events as a subview of a `UITableView`, the `delaysContentTouches` property is automatically set to `NO`.
                    DESC
-  s.homepage     = "http://EXAMPLE/NAME"
-  s.screenshots  = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
+  s.homepage     = "https://github.com/gdavis/GDIIndexBar"
+  s.screenshots  = "http://f.cl.ly/items/1a3Z0T3A2X1x0W023W2R/GDIIndexBar-1.png", "http://f.cl.ly/items/2x2H2x0A3T3k0i3y0p1i/GDIIndexBar-2.png"
   s.license      = 'MIT'
-  s.author       = { "Grant Davis" => "grant.davis@gmail.com" }
-  s.source       = { :git => "http://EXAMPLE/NAME.git", :tag => s.version.to_s }
+  s.author       = { "Grant Davis" => "grant@grantdavisinteractive.com" }
+  s.source       = { :git => "https://github.com/gdavis/GDIIndexBar.git", :tag => s.version.to_s }
 
   s.platform     = :ios, '6.0'
   s.ios.deployment_target = '6.0'
@@ -26,8 +21,4 @@ Pod::Spec.new do |s|
 
   s.source_files = 'Classes'
   s.resources = 'Assets'
-  
-  # s.public_header_files = 'Classes/**/*.h'
-  # s.frameworks = 'SomeFramework', 'AnotherFramework'
-  # s.dependency 'JSONKit', '~> 1.4'
 end
