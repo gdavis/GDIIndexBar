@@ -26,6 +26,10 @@
     NSMutableArray *_indexStrings;
     NSArray *_displayedIndexStrings;
 }
+@synthesize textColor = _textColor;
+@synthesize textShadowColor = _textShadowColor;
+@synthesize textFont = _textFont;
+@synthesize barBackgroundColor = _barBackgroundColor;
 
 #pragma mark - Lifecycle
 
@@ -404,6 +408,14 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return [UIColor grayColor];
 }
 
+- (void)setTextColor:(UIColor *)textColor
+{
+    [self willChangeValueForKey:@"textColor"];
+    _textColor = textColor;
+    [self didChangeValueForKey:@"textColor"];
+    [self setNeedsDisplay];
+}
+
 - (UIColor *)textShadowColor
 {
     if(_textShadowColor == nil) {
@@ -415,6 +427,14 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return [UIColor clearColor];
 }
 
+- (void)setTextShadowColor:(UIColor *)textShadowColor
+{
+    [self willChangeValueForKey:@"textShadowColor"];
+    _textShadowColor = textShadowColor;
+    [self didChangeValueForKey:@"textShadowColor"];
+    [self setNeedsDisplay];
+}
+
 - (UIFont *)textFont
 {
     if (_textFont == nil) {
@@ -424,6 +444,14 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
         return _textFont;
     }
     return [UIFont fontWithName:kDefaultFontName size:kDefaultFontSize];
+}
+
+- (void)setTextFont:(UIFont *)textFont
+{
+    [self willChangeValueForKey:@"textFont"];
+    _textFont = textFont;
+    [self didChangeValueForKey:@"textFont"];
+    [self setNeedsDisplay];
 }
 
 - (UIColor *)barBackgroundColor
@@ -440,6 +468,17 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return [UIColor colorWithRed:157/255.f green:165/255.f blue:169/255.f alpha:.8f];
 }
 
+- (void)setBarBackgroundColor:(UIColor *)barBackgroundColor
+{
+    [self willChangeValueForKey:@"barBackgroundColor"];
+    _barBackgroundColor = barBackgroundColor;
+    [self didChangeValueForKey:@"barBackgroundColor"];
+    
+    if (_barBackgroundView) {
+        _barBackgroundView.backgroundColor = barBackgroundColor;
+        [self setNeedsDisplay];
+    }
+}
 
 - (UIView *)barBackgroundView
 {
