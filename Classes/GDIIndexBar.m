@@ -77,17 +77,14 @@
 
 - (void)reload
 {
-    // check delegate
     NSAssert([self.delegate respondsToSelector:@selector(numberOfIndexesForIndexBar:)], @"Delegate must implement numberOfIndexesForIndexBar:");
     NSAssert([self.delegate respondsToSelector:@selector(stringForIndex:)], @"Delegate must implement stringForIndex:");
-    _numberOfIndexes = [self.delegate numberOfIndexesForIndexBar:self];
-    
-    // check table view
     NSAssert(self.tableView, @"Table view cannot be nil.");
     
+    _numberOfIndexes = [self.delegate numberOfIndexesForIndexBar:self];
     _lineHeight = [@"0" sizeWithFont:self.textFont].height;
-    
     _indexStrings = [NSMutableArray array];
+    
     for (int i = 0; i < _numberOfIndexes; i++) {
         [_indexStrings addObject:[self.delegate stringForIndex:i]];
     }
@@ -238,7 +235,6 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (CGRect)rectForBarBackgroundView
 {
     if ([self isOS7OrLater]) {
-        
         return CGRectMake(_barWidth * .5 - _barBackgroundWidth * .5 + _barBackgroundOffset.horizontal,
                           0,
                           _barBackgroundWidth,
@@ -291,9 +287,11 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     CGContextStrokeRect(ctx, textAreaRect);
 #endif
     
-    CGContextTranslateCTM(ctx, barBackgroundRect.origin.x, barBackgroundRect.origin.y);
-    [self.barBackgroundView.layer renderInContext:ctx];
-    CGContextTranslateCTM(ctx, -barBackgroundRect.origin.x, -barBackgroundRect.origin.y);
+    if (self.alwaysShowBarBackground || self.isHighlighted) {
+        CGContextTranslateCTM(ctx, barBackgroundRect.origin.x, barBackgroundRect.origin.y);
+        [self.barBackgroundView.layer renderInContext:ctx];
+        CGContextTranslateCTM(ctx, -barBackgroundRect.origin.x, -barBackgroundRect.origin.y);
+    }
     
     for (int i = 0; i < indexCount; i++) {
         NSString *text = [_displayedIndexStrings objectAtIndex:i];
@@ -322,6 +320,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     UITouch *touch = [touches.allObjects lastObject];
     if (CGRectContainsPoint([self rectForTextArea], [touch locationInView:self])) {
         _currentTouch = touch;
+        self.highlighted = CGRectContainsPoint([self rectForTextArea], [_currentTouch locationInView:self]);
         [self handleTouch:_currentTouch];
     }
 }
@@ -329,6 +328,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if ([touches containsObject:_currentTouch]) {
+        self.highlighted = CGRectContainsPoint([self rectForTextArea], [_currentTouch locationInView:self]);
         [self handleTouch:_currentTouch];
     }
 }
@@ -336,6 +336,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if ([touches containsObject:_currentTouch]) {
+        self.highlighted = NO;
         _currentTouch = nil;
     }
 }
@@ -343,6 +344,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if ([touches containsObject:_currentTouch]) {
+        self.highlighted = NO;
         _currentTouch = nil;
     }
 }
@@ -380,14 +382,21 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
         _textOffset =
         _barBackgroundOffset = UIOffsetMake(14.5f, 0.f);
         _barBackgroundWidth = kDefaultBarBackgroundWidthiOS7;
-        _barBackgroundColor = [UIColor colorWithWhite:1.f alpha:.9f];
+        _alwaysShowBarBackground = YES;
     }
     else {
-        _textOffset = UIOffsetZero;
-        _barBackgroundOffset = UIOffsetZero;
-        _barBackgroundColor = [UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:.9f];
+        _textOffset =
+        _barBackgroundOffset = UIOffsetMake(3.5f, 0.f);;
         _barBackgroundWidth = kDefaultBarBackgroundWidth;
+        self.barBackgroundView.layer.cornerRadius = 12.f;
+        _alwaysShowBarBackground = NO;
     }
+}
+
+- (void)setHighlighted:(BOOL)highlighted
+{
+    [super setHighlighted:highlighted];
+    [self setNeedsDisplay];
 }
 
 - (UIColor *)textColor
@@ -425,6 +434,21 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     }
     return [UIFont fontWithName:kDefaultFontName size:kDefaultFontSize];
 }
+
+- (UIColor *)barBackgroundColor
+{
+    if (_barBackgroundColor == nil) {
+        _barBackgroundColor = [[[self class] appearance] barBackgroundColor];
+    }
+    if (_barBackgroundColor != nil) {
+        return _barBackgroundColor;
+    }
+    if ([self isOS7OrLater]) {
+        return [UIColor colorWithWhite:1.f alpha:.9f];
+    }
+    return [UIColor colorWithRed:157/255.f green:165/255.f blue:169/255.f alpha:.8f];
+}
+
 
 - (UIView *)barBackgroundView
 {

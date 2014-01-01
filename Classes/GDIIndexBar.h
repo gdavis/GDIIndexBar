@@ -26,8 +26,13 @@ typedef enum GDIIndexBarAlignment {
 @property (strong, nonatomic) UIView *barBackgroundView;
 
 /*!
+ * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar.
+ */
+@property (nonatomic) BOOL alwaysShowBarBackground;
+
+/*!
  * Property is used for determining the width of the hit area for the control.
- * @discussion This value must be greater than or equal to the `barBackgroundWidth` value.
+ * @discussion This value must be greater than or equal to the `barBackgroundWidth` value. Default value is 44. 
  */
 @property (nonatomic) CGFloat barWidth;
 
