@@ -29,7 +29,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"GDIIndexBar";
+    self.title = @"UIViewController";
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kReuseIdentifier];
 }
 
@@ -44,11 +44,6 @@
 - (NSString *)stringForIndex:(NSUInteger)index
 {
     return [self.dataModel.sectionNames objectAtIndex:index];
-}
-
-- (CGFloat)widthForIndexBar:(GDIIndexBar *)indexBar
-{
-    return 20.f;
 }
 
 - (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index

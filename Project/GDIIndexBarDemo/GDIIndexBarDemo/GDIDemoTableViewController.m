@@ -32,9 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    self.title = @"GDIIndexBar";
-    
+    self.title = @"UITableViewController";
     self.indexBar = [[GDIIndexBar alloc] initWithTableView:self.tableView];
     self.indexBar.delegate = self;
     [self.view addSubview:self.indexBar];
@@ -51,11 +49,6 @@
 - (NSString *)stringForIndex:(NSUInteger)index
 {
     return [self.dataModel.sectionNames objectAtIndex:index];
-}
-
-- (CGFloat)widthForIndexBar:(GDIIndexBar *)indexBar
-{
-    return 20.f;
 }
 
 - (void)indexBar:(GDIIndexBar *)indexBar didSelectIndex:(NSUInteger)index
