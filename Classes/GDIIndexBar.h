@@ -11,7 +11,7 @@
 
 #pragma mark - GDIIndexBar
 
-typedef enum GDIIndexBarAlignment {
+typedef enum {
     GDIIndexBarAlignmentTop,
     GDIIndexBarAlignmentCenter,
     GDIIndexBarAlignmentBottom
