@@ -13,6 +13,10 @@
 
 `GDIIndexBar` is a component for navigating sections of a `UITableView`. It reproduces the index bar seen in the Contacts app on iOS and styled to match both iOS6 and iOS7 by default. `GDIIndexBar` can also be customized through the appearance protocol or by subclassing. 
 
+`GDIIndexBar` behaves by automatically sizing and positioning itself on the right side of the provided `UITableView`. Subclasses can alter this by overriding the `layoutSubviews` method of the `GDIIndexBar`. `GDIIndexBar` provides automatic vertical adjustments for the index bar by setting a `GDIIndexBarAlignment` value. 
+
+`GDIIndexBar` is supports being added directly to a `UITableView` as a child subview, or can exist in a different view than the table while still positioning automatically. 
+
 ## Usage
 
 To run the example project; clone the repo, and run `pod install` from the Project directory first.
@@ -21,7 +25,7 @@ The example project contains two example view controllers. One demonstrates a `U
 
 ### Instantiation
 
-`GDIIndexBar` can be instantiated through code or by setting outlets with Interface Builder. See the example project to view an example IB-only implementation. Below is an example of of instantiating an index bar from a view controller's `viewDidLoad` method:
+`GDIIndexBar` can be instantiated through code or by setting outlets with Interface Builder. See the example project for an IB-only implementation. Below is an example of of instantiating an index bar from a view controller's `viewDidLoad` method:
 
     GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:tableView];
     indexBar.delegate = self;
@@ -50,6 +54,17 @@ To respond to index bar touches, the delegate should implement the following del
                                       animated:NO];
     }
     
+### Styling
+
+`GDIIndexBar` can be customized by setting properties for text, text shadow, font, and bar background. A custom bar background view can also be provided using the `barBackgroundView` property. Offsets can also be provided for the text and bar background by setting the `textOffset` and `barBackgroundOffset` values, respectively. 
+
+Below are examples of styling the index bar through the appearance protocol. 
+
+    [[GDIIndexBar appearance] setTextColor:[UIColor redColor]];
+    [[GDIIndexBar appearance] setTextShadowColor:[UIColor purpleColor]];
+    [[GDIIndexBar appearance] setTextFont:[UIFont italicSystemFontOfSize:11.5];
+    
+For further customization, subclasses can override the `drawRect:` method of the GDIIndexBar to perform completely custom drawing. 
 
 ## Requirements
 
