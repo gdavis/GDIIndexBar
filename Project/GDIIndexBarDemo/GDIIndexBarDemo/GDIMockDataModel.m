@@ -105,8 +105,6 @@
     [self.sectionNames sortUsingComparator:^NSComparisonResult(NSString *name1, NSString *name2) {
         return [name1 compare:name2];
     }];
-    
-    NSLog(@"Mock Data: %@", self.data);
 }
 
 @end
