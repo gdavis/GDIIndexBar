@@ -1,22 +1,20 @@
 //
-//  GDIDemoTableViewController.m
+//  GDICompositeTableViewController.m
 //  GDIIndexBarDemo
 //
-//  Created by Grant Davis on 12/31/13.
-//  Copyright (c) 2013 Grant Davis Interactive, LLC. All rights reserved.
+//  Created by Grant Davis on 1/1/14.
+//  Copyright (c) 2014 Grant Davis Interactive, LLC. All rights reserved.
 //
 
-#import "GDIDemoTableViewController.h"
+#import "GDICompositeTableViewController.h"
 
 #define kReuseIdentifier @"reuseIdentifier"
 
-
-@interface GDIDemoTableViewController ()
+@interface GDICompositeTableViewController ()
 
 @end
 
-
-@implementation GDIDemoTableViewController
+@implementation GDICompositeTableViewController
 
 #pragma mark - Lifecycle
 
@@ -28,18 +26,13 @@
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.title = @"GDIIndexBar";
-    
-    self.indexBar = [[GDIIndexBar alloc] initWithTableView:self.tableView];
-    self.indexBar.delegate = self;
-    [self.view addSubview:self.indexBar];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kReuseIdentifier];
 }
+
 
 #pragma marka - Index bar delegate
 

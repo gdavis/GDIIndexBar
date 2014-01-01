@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4D0521F8087F4938ACA5D14B /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C31FD36FA9F541E0963B374D /* libPods.a */; };
+		772C153E18748B8800B41560 /* GDICompositeTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C153D18748B8800B41560 /* GDICompositeTableViewController.m */; };
+		772C1541187490A300B41560 /* GDIMockDataModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 772C1540187490A300B41560 /* GDIMockDataModel.m */; };
 		772CD9E618731BC300AE98BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9E518731BC300AE98BC /* Foundation.framework */; };
 		772CD9E818731BC300AE98BC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9E718731BC300AE98BC /* CoreGraphics.framework */; };
 		772CD9EA18731BC300AE98BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 772CD9E918731BC300AE98BC /* UIKit.framework */; };
@@ -36,6 +38,10 @@
 
 /* Begin PBXFileReference section */
 		2896D196953F4FACAC3B3289 /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		772C153C18748B8800B41560 /* GDICompositeTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDICompositeTableViewController.h; sourceTree = "<group>"; };
+		772C153D18748B8800B41560 /* GDICompositeTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDICompositeTableViewController.m; sourceTree = "<group>"; };
+		772C153F187490A300B41560 /* GDIMockDataModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GDIMockDataModel.h; sourceTree = "<group>"; };
+		772C1540187490A300B41560 /* GDIMockDataModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GDIMockDataModel.m; sourceTree = "<group>"; };
 		772CD9E218731BC300AE98BC /* GDIIndexBarDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GDIIndexBarDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		772CD9E518731BC300AE98BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		772CD9E718731BC300AE98BC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,8 +126,12 @@
 			children = (
 				772CD9F418731BC300AE98BC /* GDIAppDelegate.h */,
 				772CD9F518731BC300AE98BC /* GDIAppDelegate.m */,
+				772C153F187490A300B41560 /* GDIMockDataModel.h */,
+				772C1540187490A300B41560 /* GDIMockDataModel.m */,
 				772CDA1A18731E3800AE98BC /* GDIDemoTableViewController.h */,
 				772CDA1B18731E3800AE98BC /* GDIDemoTableViewController.m */,
+				772C153C18748B8800B41560 /* GDICompositeTableViewController.h */,
+				772C153D18748B8800B41560 /* GDICompositeTableViewController.m */,
 				772CD9F718731BC300AE98BC /* Main.storyboard */,
 				772CD9FD18731BC300AE98BC /* Images.xcassets */,
 				772CD9EC18731BC300AE98BC /* Supporting Files */,
@@ -292,8 +302,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				772CD9F218731BC300AE98BC /* main.m in Sources */,
+				772C1541187490A300B41560 /* GDIMockDataModel.m in Sources */,
 				772CDA1C18731E3800AE98BC /* GDIDemoTableViewController.m in Sources */,
 				772CD9F618731BC300AE98BC /* GDIAppDelegate.m in Sources */,
+				772C153E18748B8800B41560 /* GDICompositeTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
