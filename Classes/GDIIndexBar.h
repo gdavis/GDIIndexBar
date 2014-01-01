@@ -18,7 +18,7 @@ typedef enum GDIIndexBarAlignment {
 } GDIIndexBarAlignment;
 
 @protocol GDIIndexBarDelegate;
-@interface GDIIndexBar : UIView
+@interface GDIIndexBar : UIControl
 
 @property (nonatomic) GDIIndexBarAlignment verticalAlignment;
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;

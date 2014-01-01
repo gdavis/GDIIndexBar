@@ -21,6 +21,8 @@
     CGFloat _lineHeight;
     NSDictionary *_textAttributes;
     UITouch *_currentTouch;
+    NSMutableArray *_indexStrings;
+    NSArray *_displayedIndexStrings;
 }
 
 #pragma mark - Lifecycle
@@ -50,6 +52,8 @@
     _textSpacing = 2.f;
     _barWidth = kDefaultIndexBarWidth;
     _barBackgroundColor = [UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:.9f];
+    self.exclusiveTouch = YES;
+    self.multipleTouchEnabled = NO;
     
 #if kShowDebugOutlines
     self.layer.borderColor = [UIColor redColor].CGColor;
@@ -74,9 +78,16 @@
 - (void)deviceOrientationDidChange
 {
     [self setNeedsLayout];
-    [self setNeedsDisplay];
 }
 
+- (void)willMoveToSuperview:(UIView *)newSuperview
+{
+    if ([newSuperview isKindOfClass:[UIScrollView class]]) {
+        UIScrollView *scrollView = (UIScrollView *)newSuperview;
+        scrollView.delaysContentTouches = NO;
+        NSLog(@"[GDIIndexBar] WARNING: Adding a GDIIndexBar as a subview of a UIScrollView will cause `delaysContentTouches` to be set to `NO`.");
+    }
+}
 
 #pragma mark - Public API
 
@@ -92,8 +103,12 @@
     
     _lineHeight = [@"0" sizeWithFont:self.textFont].height;
     
+    _indexStrings = [NSMutableArray array];
+    for (int i = 0; i < _numberOfIndexes; i++) {
+        [_indexStrings addObject:[self.delegate stringForIndex:i]];
+    }
+    
     [self setNeedsLayout];
-    [self setNeedsDisplay];
 }
 
 #pragma mark - Property Setters
@@ -117,6 +132,7 @@
     }
 }
 
+
 #pragma mark - Observing scroll view changes
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -131,20 +147,46 @@
 
 #pragma mark - Layout
 
+// this method creates an array of the available strings and truncates
+// the array if needed to fit the current viewable area.
+- (void)updateDisplayedIndexStrings
+{
+    CGFloat rowHeight = _lineHeight + _textSpacing;
+    CGFloat desiredHeight = _textSpacing * 2 + rowHeight * _numberOfIndexes;
+    if (desiredHeight > self.bounds.size.height) {
+        
+        NSMutableArray *displayedStrings = [NSMutableArray arrayWithArray:_indexStrings];
+        NSUInteger numberOfRowsThatFit = floorf(self.bounds.size.height / rowHeight);
+        NSUInteger hiddenRows = _numberOfIndexes - numberOfRowsThatFit;
+        
+        // determine which indexes will be removed from the displayed strings.
+        // divide the number of indexes by the number of hidden rows plus 2
+        // so that we may omit the first and last indexes and remove the
+        // indexes at set intervals.
+        NSUInteger indexInterval = _numberOfIndexes / (hiddenRows + 2);
+        NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
+        for (int i = 0; i < hiddenRows; i++) {
+            [indexSet addIndex:indexInterval * (i+1)];
+        }
+        [displayedStrings removeObjectsAtIndexes:indexSet];
+        
+        _displayedIndexStrings = [NSArray arrayWithArray:displayedStrings];
+    }
+    else {
+        _displayedIndexStrings = [NSArray arrayWithArray:_indexStrings];
+    }
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     
-    if (self.superview == _tableView) {
-        _tableView.canCancelContentTouches = NO;
-        _tableView.delaysContentTouches = NO;
-    }
-    
     CGPoint relativeTableViewTopRightPoint = [self.superview convertPoint:CGPointMake(_tableView.frame.size.width, 0) fromView:_tableView];
     CGPoint origin = CGPointMake(relativeTableViewTopRightPoint.x - _barWidth,
                                  relativeTableViewTopRightPoint.y);
+    
     CGFloat height = _tableView.frame.size.height;
-
+    
     // here we check if our parent view is a scroll view, and if it is,
     // add its offset and insets to our origin to keep it fixed
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
@@ -163,7 +205,10 @@
     if ([self.superview isKindOfClass:[UITableView class]]) {
         [self.superview bringSubviewToFront:self];
     }
+    
+    [self setNeedsDisplay];
 }
+
 
 CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return CGPointMake(point1.x + point2.x, point1.y + point2.y);
@@ -172,19 +217,13 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 - (CGRect)rectForTextArea
 {
-    CGRect tableRect = self.tableView.frame;
     CGFloat indexRowHeight = _textSpacing + _lineHeight;
-    CGFloat height = indexRowHeight * _numberOfIndexes + _textSpacing * 2;
+    CGFloat height = indexRowHeight * [self numberOfDisplayableRows] + _textSpacing * 2;
     CGRect parentInsetRect = self.superview.frame;
     
     if ([self.superview isKindOfClass:[UIScrollView class]]) {
         UIScrollView *scrollView = (UIScrollView *)self.superview;
         parentInsetRect = UIEdgeInsetsInsetRect(self.superview.frame, scrollView.contentInset);
-    }
-    
-    // if the height for all indexes is too large, display as many as we can
-    if (height > tableRect.size.height) {
-        height = floorf(tableRect.size.height / indexRowHeight) * _lineHeight;
     }
     
     CGFloat yp;
@@ -202,8 +241,22 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
             yp = parentInsetRect.size.height * .5 - height * .5 + _edgeOffset.vertical;
             break;
     }
+
+    yp = fmaxf(0.f, yp);
     
     return CGRectMake(0, yp, _barWidth, height);
+}
+
+
+- (NSUInteger)numberOfDisplayableRows
+{
+    CGFloat rowHeight = _lineHeight + _textSpacing;
+    CGFloat desiredHeight = _textSpacing * 2 + rowHeight * _numberOfIndexes;
+    if (desiredHeight > self.bounds.size.height) {
+        NSUInteger numberOfRowsThatFit = floorf(self.bounds.size.height / rowHeight);
+        return numberOfRowsThatFit;
+    }
+    return _numberOfIndexes;
 }
 
 
@@ -212,29 +265,22 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
+    [self updateDisplayedIndexStrings];
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    NSUInteger indexCount = [self.delegate numberOfIndexesForIndexBar:self];
+    NSUInteger indexCount = _displayedIndexStrings.count;
     CGRect textAreaRect = [self rectForTextArea];
     CGFloat yp = _textSpacing + textAreaRect.origin.y + _edgeOffset.vertical;
     
     // draw debug box for text area
 #if kShowDebugOutlines
     CGContextSetLineWidth(ctx, 2.f);
-    CGContextSetStrokeColorWithColor(ctx, [UIColor blueColor].CGColor);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor orangeColor].CGColor);
     CGContextStrokeRect(ctx, textAreaRect);
 #endif
     
     for (int i = 0; i < indexCount; i++) {
-        
-        NSString *text;
-        // ask delegate for text to show
-        if ([self.delegate respondsToSelector:@selector(stringForIndex:)]) {
-            text = [self.delegate stringForIndex:i];
-        }
-        // otherwise use default text values
-        else text = [NSString stringWithFormat:@"%i", i];
-        
+        NSString *text = [_displayedIndexStrings objectAtIndex:i];
         CGSize textSize = [text sizeWithFont:self.textFont];
         CGPoint point = CGPointMake(rect.size.width * .5 - textSize.width * .5 + _edgeOffset.horizontal, yp);
         CGPoint shadowPoint = CGPointAdd(point, CGPointMake(self.textShadowOffset.horizontal, self.textShadowOffset.vertical));
@@ -259,21 +305,12 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 #pragma mark - Touch Handling
 
-- (BOOL)canBecomeFirstResponder
-{
-    return YES;
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *touch = [touches.allObjects lastObject];
     if (CGRectContainsPoint([self rectForTextArea], [touch locationInView:self])) {
         _currentTouch = touch;
         [self handleTouch:_currentTouch];
-    }
-    else {
-        [super touchesBegan:touches withEvent:event];
-        [self.nextResponder touchesBegan:touches withEvent:event];
     }
 }
 
@@ -303,27 +340,14 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     if ([self.delegate respondsToSelector:@selector(indexBar:didSelectIndex:)]) {
         CGPoint touchPoint = [touch locationInView:self];
         CGRect textAreaRect = [self rectForTextArea];
-        CGPoint pointInTextArea = CGPointMake(touchPoint.x, touchPoint.y - textAreaRect.origin.y);
-        CGFloat progress = fmaxf(0.f, fminf(pointInTextArea.y / textAreaRect.size.height, 1.f));
-        NSUInteger index = floorf(progress * (_numberOfIndexes-1));
+        CGFloat progress = fmaxf(0.f, fminf((touchPoint.y - textAreaRect.origin.y) / textAreaRect.size.height, .999f));
+        NSUInteger stringIndex = floorf(progress * _displayedIndexStrings.count);
+        NSUInteger index = [_indexStrings indexOfObject:[_displayedIndexStrings objectAtIndex:stringIndex]];
         [self.delegate indexBar:self didSelectIndex:index];
     }
 }
 
-
 #pragma mark - Appearance
-
-- (NSDictionary *)textAttributes
-{
-    if (_textAttributes == nil) {
-        _textAttributes = @{ UITextAttributeFont: self.textFont,
-                             UITextAttributeTextColor: self.textColor,
-                             UITextAttributeTextShadowColor: self.textShadowColor,
-                            };
-    }
-    return _textAttributes;
-}
-
 
 - (UIColor *)textColor
 {
@@ -336,7 +360,6 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     return [UIColor whiteColor];
 }
 
-
 - (UIColor *)textShadowColor
 {
     if(_textShadowColor == nil) {
@@ -347,7 +370,6 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     }
     return [UIColor blackColor];
 }
-
 
 - (UIFont *)textFont
 {
