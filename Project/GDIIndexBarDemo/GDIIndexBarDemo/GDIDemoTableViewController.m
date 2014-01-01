@@ -35,6 +35,12 @@
     self.title = @"UITableViewController";
     self.indexBar = [[GDIIndexBar alloc] initWithTableView:self.tableView];
     self.indexBar.delegate = self;
+    self.indexBar.textColor = [UIColor whiteColor];
+    self.indexBar.textShadowColor = [UIColor colorWithWhite:0.f alpha:.5f];
+    self.indexBar.textShadowOffset = UIOffsetMake(1, 1);
+    self.indexBar.barBackgroundColor = [UIColor colorWithRed:0.f green:122.f/255.f blue:1.f alpha:1.f];
+    self.indexBar.textSpacing = 5.f;
+    self.indexBar.textFont = [UIFont fontWithName:@"Menlo-Bold" size:11.5f];
     [self.view addSubview:self.indexBar];
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:kReuseIdentifier];
 }
