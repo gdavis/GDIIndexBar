@@ -416,7 +416,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (UIColor *)textShadowColor
 {
     if(_textShadowColor == nil) {
-        _textShadowColor = [[[self class] appearance] textColor];
+        _textShadowColor = [[[self class] appearance] textShadowColor];
     }
     if(_textShadowColor != nil) {
         return _textShadowColor;
