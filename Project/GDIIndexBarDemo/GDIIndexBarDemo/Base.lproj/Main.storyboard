@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
     <scenes>
-        <!--Table View Controller - Root View Controller-->
+        <!--Table View Controller - GDIIndexBar-->
         <scene sceneID="flX-lV-KFV">
             <objects>
                 <tableViewController id="8rN-Ky-IBk" sceneMemberID="viewController">
@@ -60,7 +60,7 @@
                             </tableViewSection>
                         </sections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Root View Controller" id="FDu-eF-VRm"/>
+                    <navigationItem key="navigationItem" title="GDIIndexBar" id="FDu-eF-VRm"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rdP-Kn-YzZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
