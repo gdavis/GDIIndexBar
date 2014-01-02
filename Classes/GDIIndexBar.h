@@ -12,50 +12,51 @@
 #pragma mark - GDIIndexBar
 
 typedef enum {
+    GDIIndexBarAlignmentCenter = 0,
     GDIIndexBarAlignmentTop,
-    GDIIndexBarAlignmentCenter,
     GDIIndexBarAlignmentBottom
 } GDIIndexBarAlignment;
 
 @protocol GDIIndexBarDelegate;
 @interface GDIIndexBar : UIControl
 
-@property (nonatomic) GDIIndexBarAlignment verticalAlignment;
+@property (nonatomic) GDIIndexBarAlignment verticalAlignment UI_APPEARANCE_SELECTOR;
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) UIView *barBackgroundView;
+@property (strong, nonatomic) IBOutlet UIView *barBackgroundView;
 
 /*!
- * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar.
+ * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar. This value uses an NSNumber instead of BOOL to conform to the UIAppearance protocol.
  * @discussion Defaults to YES for iOS7 devices, and NO for iOS6.
  */
-@property (nonatomic) BOOL alwaysShowBarBackground;
+@property (strong, nonatomic) NSNumber *alwaysShowBarBackground UI_APPEARANCE_SELECTOR;
 
 /*!
  * Property is used for determining the width of the hit area for the control.
  * @discussion This value must be greater than or equal to the `barBackgroundWidth` value. Default value is 44. 
  */
-@property (nonatomic) CGFloat barWidth;
+@property (assign, nonatomic) CGFloat barWidth UI_APPEARANCE_SELECTOR;
 
 /*!
  * Property used to determine the width of the bar background view. 
  * @discussion This value should be less than or equal to the `barWidth` value. This value is applied to the background view position.
  */
-@property (nonatomic) CGFloat barBackgroundWidth;
-@property (nonatomic) UIOffset barBackgroundOffset;
+@property (assign, nonatomic) CGFloat barBackgroundWidth UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) UIOffset barBackgroundOffset UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) CGFloat barBackgroundCornerRadius UI_APPEARANCE_SELECTOR;
 
-@property (nonatomic) CGFloat textSpacing;
-@property (nonatomic) UIOffset textShadowOffset;
+@property (assign, nonatomic) CGFloat textSpacing UI_APPEARANCE_SELECTOR;
+@property (assign, nonatomic) UIOffset textShadowOffset UI_APPEARANCE_SELECTOR;
 
-@property (strong, nonatomic) UIColor *textColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *textShadowColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *textFont NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *barBackgroundColor NS_AVAILABLE_IOS(5_0) UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /*!
  * Offsets the position of the text drawing.
  */
-@property (nonatomic) UIOffset textOffset;
+@property (nonatomic) UIOffset textOffset UI_APPEARANCE_SELECTOR;
 
 /*!
  * Initializes the index bar with an associated table view.

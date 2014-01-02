@@ -31,6 +31,46 @@
 @synthesize textFont = _textFont;
 @synthesize barBackgroundColor = _barBackgroundColor;
 
+#pragma mark - Class Methods
+
++ (void)initialize
+{
+    if (self == [GDIIndexBar class]) {
+        GDIIndexBar *appearance = [self appearance];
+        [appearance setVerticalAlignment:GDIIndexBarAlignmentCenter];
+        [appearance setTextShadowOffset:UIOffsetZero];
+        [appearance setTextSpacing:kDefaultTextSpacing];
+        [appearance setBarWidth:kStandardButtonWidth];
+        
+        if ([self isOS7OrLater]) {
+            UIOffset offset = UIOffsetMake(14.5f, 0.f);
+            [appearance setTextOffset:offset];
+            [appearance setBarBackgroundOffset:offset];
+            [appearance setBarBackgroundWidth:kDefaultBarBackgroundWidthiOS7];
+            [appearance setAlwaysShowBarBackground:@(YES)];
+        }
+        else {
+            UIOffset offset = UIOffsetMake(3.5f, 0.f);
+            [appearance setTextOffset:offset];
+            [appearance setBarBackgroundOffset:offset];
+            [appearance setBarBackgroundCornerRadius:12.f];
+            [appearance setBarBackgroundWidth:kDefaultBarBackgroundWidth];
+            [appearance setAlwaysShowBarBackground:@(NO)];
+        }
+    }
+}
+
++ (BOOL)isOS7OrLater
+{
+    static BOOL isOS7OrLater;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        isOS7OrLater = !(floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1);
+    });
+    return isOS7OrLater;
+}
+
+
 #pragma mark - Lifecycle
 
 - (id)initWithTableView:(UITableView *)tableView
@@ -229,7 +269,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 - (CGRect)rectForBarBackgroundView
 {
-    if ([self isOS7OrLater]) {
+    if ([GDIIndexBar isOS7OrLater]) {
         return CGRectMake(_barWidth * .5 - _barBackgroundWidth * .5 + _barBackgroundOffset.horizontal,
                           0,
                           _barBackgroundWidth,
@@ -282,7 +322,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     CGContextStrokeRect(ctx, textAreaRect);
 #endif
     
-    if (self.alwaysShowBarBackground || self.isHighlighted) {
+    if ([self.alwaysShowBarBackground boolValue] || self.isHighlighted) {
         CGContextTranslateCTM(ctx, barBackgroundRect.origin.x, barBackgroundRect.origin.y);
         [self.barBackgroundView.layer renderInContext:ctx];
         CGContextTranslateCTM(ctx, -barBackgroundRect.origin.x, -barBackgroundRect.origin.y);
@@ -368,24 +408,15 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     self.backgroundColor = [UIColor clearColor];
 #endif
     
-    _verticalAlignment = GDIIndexBarAlignmentCenter;
-    _textShadowOffset = UIOffsetZero;
-    _textSpacing = kDefaultTextSpacing;
-    _barWidth = kStandardButtonWidth;
-    
-    if ([self isOS7OrLater]) {
-        _textOffset =
-        _barBackgroundOffset = UIOffsetMake(14.5f, 0.f);
-        _barBackgroundWidth = kDefaultBarBackgroundWidthiOS7;
-        _alwaysShowBarBackground = YES;
-    }
-    else {
-        _textOffset =
-        _barBackgroundOffset = UIOffsetMake(3.5f, 0.f);;
-        _barBackgroundWidth = kDefaultBarBackgroundWidth;
-        self.barBackgroundView.layer.cornerRadius = 12.f;
-        _alwaysShowBarBackground = NO;
-    }
+    _verticalAlignment = [[[self class] appearance] verticalAlignment];
+    _textShadowOffset = [[[self class] appearance] textShadowOffset];
+    _textSpacing = [[[self class] appearance] textSpacing];
+    _barWidth = [[[self class] appearance] barWidth];
+    _textOffset = [[[self class] appearance] textOffset];
+    _barBackgroundOffset = [[[self class] appearance] barBackgroundOffset];
+    _barBackgroundWidth = [[[self class] appearance] barBackgroundWidth];
+    _alwaysShowBarBackground = [[[self class] appearance] alwaysShowBarBackground];
+    _barBackgroundCornerRadius = [[[self class] appearance] barBackgroundCornerRadius];
 }
 
 - (void)setHighlighted:(BOOL)highlighted
@@ -402,7 +433,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     if(_textColor != nil) {
         return _textColor;
     }
-    if ([self isOS7OrLater]) {
+    if ([GDIIndexBar isOS7OrLater]) {
         return self.superview.tintColor;
     }
     return [UIColor grayColor];
@@ -462,7 +493,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     if (_barBackgroundColor != nil) {
         return _barBackgroundColor;
     }
-    if ([self isOS7OrLater]) {
+    if ([GDIIndexBar isOS7OrLater]) {
         return [UIColor colorWithWhite:1.f alpha:.9f];
     }
     return [UIColor colorWithRed:157/255.f green:165/255.f blue:169/255.f alpha:.8f];
@@ -480,24 +511,26 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     }
 }
 
+- (void)setBarBackgroundCornerRadius:(CGFloat)barBackgroundCornerRadius
+{
+    [self willChangeValueForKey:@"barBackgroundCornerRadius"];
+    _barBackgroundCornerRadius = barBackgroundCornerRadius;
+    [self didChangeValueForKey:@"barBackgroundCornerRadius"];
+    
+    if (_barBackgroundView) {
+        _barBackgroundView.layer.cornerRadius = barBackgroundCornerRadius;
+        [self setNeedsDisplay];
+    }
+}
+
 - (UIView *)barBackgroundView
 {
     if (_barBackgroundView == nil) {
         _barBackgroundView = [[UIView alloc] initWithFrame:CGRectZero];
         _barBackgroundView.backgroundColor = self.barBackgroundColor;
+        _barBackgroundView.layer.cornerRadius = self.barBackgroundCornerRadius;
     }
     return _barBackgroundView;
-}
-
-
-- (BOOL)isOS7OrLater
-{
-    static BOOL isOS7OrLater;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        isOS7OrLater = !(floor(NSFoundationVersionNumber) <= NSFoundationVersionNumber_iOS_6_1);
-    });
-    return isOS7OrLater;
 }
 
 @end
