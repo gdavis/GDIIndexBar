@@ -3,7 +3,7 @@
 <table cellspacing="0" cellpadding="10px">
   <tr>
     <td>
-      <img src="http://f.cl.ly/items/1a3Z0T3A2X1x0W023W2R/GDIIndexBar-1.png" alt="iOS7 Screenshot" width="320px">
+      <img src="http://f.cl.ly/items/2c32450e1K3j2P1t242r/GDIIndexBar-3.png" alt="iOS7 Screenshot" width="320px">
     </td>
     <td>
       <img src="http://f.cl.ly/items/2x2H2x0A3T3k0i3y0p1i/GDIIndexBar-2.png" alt="iOS7 Screenshot" width="320px">
