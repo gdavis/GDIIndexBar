@@ -2,6 +2,9 @@
 //  GDIIndexBar.h
 //  GDIIndexBar
 //
+//  TODO: Finish Documentation
+//  TODO: Rework offsets for text and bar background.
+//
 //  Created by Grant Davis on 12/31/13.
 //  Copyright (c) 2013 Grant Davis Interactive, LLC. All rights reserved.
 //
@@ -18,10 +21,25 @@ typedef enum {
 } GDIIndexBarAlignment;
 
 @protocol GDIIndexBarDelegate;
+
+/*!
+ *
+ */
 @interface GDIIndexBar : UIControl
 
+/*!
+ *
+ */
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
+
+/*!
+ *
+ */
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+
+/*!
+ *
+ */
 @property (strong, nonatomic) IBOutlet UIView *barBackgroundView;
 
 /*!
@@ -46,21 +64,52 @@ typedef enum {
  * @discussion This value should be less than or equal to the `barWidth` value. This value is applied to the background view position.
  */
 @property (assign, nonatomic) CGFloat barBackgroundWidth UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
 @property (strong, nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
 @property (assign, nonatomic) UIOffset barBackgroundOffset UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
 @property (assign, nonatomic) CGFloat barBackgroundCornerRadius UI_APPEARANCE_SELECTOR;
-
-@property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
-@property (assign, nonatomic) CGFloat textSpacing UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
-@property (assign, nonatomic) UIOffset textShadowOffset UI_APPEARANCE_SELECTOR;
-
 
 /*!
  * Offsets the position of the text drawing.
  */
 @property (nonatomic) UIOffset textOffset UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
+@property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
+@property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
+@property (assign, nonatomic) CGFloat textSpacing UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
+@property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
+
+/*!
+ *
+ */
+@property (assign, nonatomic) UIOffset textShadowOffset UI_APPEARANCE_SELECTOR;
+
 
 /*!
  * Initializes the index bar with an associated table view.
