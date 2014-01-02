@@ -20,10 +20,14 @@ typedef enum {
 @protocol GDIIndexBarDelegate;
 @interface GDIIndexBar : UIControl
 
-@property (nonatomic) GDIIndexBarAlignment verticalAlignment UI_APPEARANCE_SELECTOR;
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) IBOutlet UIView *barBackgroundView;
+
+/*!
+ * Property to determine the verical position of the text displayed in the index bar. Defaults to `GDIIndexBarAlignmentTop`.
+ */
+@property (nonatomic) GDIIndexBarAlignment verticalAlignment UI_APPEARANCE_SELECTOR;
 
 /*!
  * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar. This value uses an NSNumber instead of BOOL to conform to the UIAppearance protocol.
@@ -33,7 +37,7 @@ typedef enum {
 
 /*!
  * Property is used for determining the width of the hit area for the control.
- * @discussion This value must be greater than or equal to the `barBackgroundWidth` value. Default value is 44. 
+ * @discussion This value must be greater than or equal to the `barBackgroundWidth` value. Default value is 44.
  */
 @property (assign, nonatomic) CGFloat barWidth UI_APPEARANCE_SELECTOR;
 
@@ -42,16 +46,16 @@ typedef enum {
  * @discussion This value should be less than or equal to the `barWidth` value. This value is applied to the background view position.
  */
 @property (assign, nonatomic) CGFloat barBackgroundWidth UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) UIOffset barBackgroundOffset UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat barBackgroundCornerRadius UI_APPEARANCE_SELECTOR;
 
+@property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) CGFloat textSpacing UI_APPEARANCE_SELECTOR;
+@property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
 @property (assign, nonatomic) UIOffset textShadowOffset UI_APPEARANCE_SELECTOR;
 
-@property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
-@property (strong, nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /*!
  * Offsets the position of the text drawing.
