@@ -1,4 +1,4 @@
 language: objective-c
-xcode_project: Project/GDIndexBar/GDIIndexBar.xcodeproj
+xcode_project: Project/GDIIndexBar/GDIIndexBar.xcodeproj
 xcode_scheme: GDIIndexBar
 xcode_sdk: iphonesimulator
