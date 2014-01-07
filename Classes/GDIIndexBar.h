@@ -2,7 +2,6 @@
 //  GDIIndexBar.h
 //  GDIIndexBar
 //
-//  TODO: Finish Documentation
 //  TODO: Rework offsets for text and bar background.
 //
 //  Created by Grant Davis on 12/31/13.
@@ -23,96 +22,107 @@ typedef enum {
 @protocol GDIIndexBarDelegate;
 
 /*!
- *
+ * TODO: Finish class description
  */
 @interface GDIIndexBar : UIControl
 
 /*!
- *
+ * @abstract The delegate of the index bar object.
+ * @discussion The delegate of the index bar provides the number of indexes and the text to display for each index. The delegate also responds to index bar touch events in order to update the scroll position of the content for the index bar.
  */
 @property (weak, nonatomic) IBOutlet id <GDIIndexBarDelegate> delegate;
 
 /*!
- *
+ * @abstract The table view for the index bar object.
+ * @discussion Reference to the table view the index bar is scrolling. Allows the index bar to appropriately size and position the index bar relative to the provided table view.
  */
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 /*!
- *
+ * @abstract The background view for the index bar.
+ * @discussion The bar background view displays behind the index bar when rendering. Change this property to customize the display of the bar background with a custom view.
  */
 @property (strong, nonatomic) IBOutlet UIView *barBackgroundView;
 
 /*!
- * @abstract String to display between index bar rows when the displayed list of indexes is truncated in order to fit the table view.
+ * @abstract String to display in place of items that have been truncated from the index bar.
  * @discussion GDIIndex bar is built to display truncated text when the index bar resizes and there is not enough vertical space to fit all indexes provided. When this happens, rows omitted in the display are replaced with the truncatedRowText value. Defaults to "•".
  */
 @property (strong, nonatomic) NSString *truncatedRowText UI_APPEARANCE_SELECTOR;
 
 /*!
- * Property to determine the verical position of the text displayed in the index bar. Defaults to `GDIIndexBarAlignmentTop`.
+ * @abstract The vertical alignment of the index bar.
+ * @discussion Property to determine the verical position of the text displayed in the index bar. Defaults to `GDIIndexBarAlignmentTop`.
  */
 @property (nonatomic) GDIIndexBarAlignment verticalAlignment UI_APPEARANCE_SELECTOR;
 
 /*!
- * If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar. This value uses an NSNumber instead of BOOL to conform to the UIAppearance protocol.
- * @discussion Defaults to YES for iOS7 devices, and NO for iOS6.
+ * @abstract Determines if the bar background should always show.
+ * @discussion If YES, always displays the background bar. If NO, the bar background view is only displayed when a user taps on the index bar. This value uses an NSNumber instead of BOOL to conform to the UIAppearance protocol. Defaults to YES for iOS7 devices, and NO for iOS6.
  */
 @property (strong, nonatomic) NSNumber *alwaysShowBarBackground UI_APPEARANCE_SELECTOR;
 
 /*!
- * Property is used for determining the width of the hit area for the control.
+ * @abstract The width of the hit area for the control.
  * @discussion This value must be greater than or equal to the `barBackgroundWidth` value. Default value is 44.
  */
 @property (assign, nonatomic) CGFloat barWidth UI_APPEARANCE_SELECTOR;
 
 /*!
- * Property used to determine the width of the bar background view. 
+ * @abstract The width of the bar background view.
  * @discussion This value should be less than or equal to the `barWidth` value. This value is applied to the background view position.
  */
 @property (assign, nonatomic) CGFloat barBackgroundWidth UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract The color of the bar background view.
+ * @discussion This value sets the background color of the bar background view, when provided. If the background view is nil, this property has no effect.
  */
 @property (strong, nonatomic) UIColor *barBackgroundColor UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract Amount to offset the bar background frame.
+ * @discussion Offsets the origin of the bar bacground frame. By default, views are centered within the index bar, using the barWidth value to determine the horizontal area to center within. The defaults value changes for iOS and iOS7 to support the different styles.
  */
 @property (assign, nonatomic) UIOffset barBackgroundOffset UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract The corner radius of the bar background view's layer.
+ * @discussion This value sets the `cornerRadius` value of the `barBackgroundView`'s  layer. If the background view is nil, this property has no effect. Defaults to 12 on iOS6, and 0 for iOS7 and later.
  */
 @property (assign, nonatomic) CGFloat barBackgroundCornerRadius UI_APPEARANCE_SELECTOR;
 
 /*!
- * Offsets the position of the text drawing.
+ * @abstract Offsets the position of the text drawing.
+ * @discussion Offsets the origin of the standard text area frame. By default, views are centered within the index bar, using the barWidth value to determine the horizontal area to center within. The defaults value changes for iOS and iOS7 to support the different styles.
  */
 @property (nonatomic) UIOffset textOffset UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract Font for the index bar text.
+ * @discussion Defaults to Helvetica Neue Bold 11pt.
  */
 @property (strong, nonatomic) UIFont *textFont UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract Sets the text color for the index bar text.
+ * @discussion Defaults to blue on iOS7 and later, and gray for iOS6.
  */
 @property (strong, nonatomic) UIColor *textColor UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract Amount of vertical spacing between each letter of index bar.
+ * @discussion Defaults to 2.0.
  */
 @property (assign, nonatomic) CGFloat textSpacing UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract The shadow color for the index bar text.
  */
 @property (strong, nonatomic) UIColor *textShadowColor UI_APPEARANCE_SELECTOR;
 
 /*!
- *
+ * @abstract The offset for the shadow color of the index bar text.
  */
 @property (assign, nonatomic) UIOffset textShadowOffset UI_APPEARANCE_SELECTOR;
 
