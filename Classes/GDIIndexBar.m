@@ -416,9 +416,8 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
         CGPoint touchPoint = [touch locationInView:self];
         CGRect textAreaRect = [self rectForTextArea];
         CGFloat progress = fmaxf(0.f, fminf((touchPoint.y - textAreaRect.origin.y) / textAreaRect.size.height, .999f));
-        NSUInteger stringIndex = floorf(progress * _displayedIndexStrings.count);
-        NSUInteger index = [_indexStrings indexOfObject:[_displayedIndexStrings objectAtIndex:stringIndex]];
-        [self.delegate indexBar:self didSelectIndex:index];
+        NSUInteger stringIndex = floorf(progress * _indexStrings.count);
+        [self.delegate indexBar:self didSelectIndex:stringIndex];
     }
 }
 
