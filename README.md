@@ -1,4 +1,5 @@
 # GDIIndexBar - A custom index bar for iOS
+[![Pod version](https://badge.fury.io/co/GDIIndexBar.png)](http://badge.fury.io/co/GDIIndexBar)
 
 <table cellspacing="0" cellpadding="10px">
   <tr>
