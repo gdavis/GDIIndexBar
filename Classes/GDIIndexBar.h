@@ -43,6 +43,12 @@ typedef enum {
 @property (strong, nonatomic) IBOutlet UIView *barBackgroundView;
 
 /*!
+ * @abstract String to display between index bar rows when the displayed list of indexes is truncated in order to fit the table view.
+ * @discussion GDIIndex bar is built to display truncated text when the index bar resizes and there is not enough vertical space to fit all indexes provided. When this happens, rows omitted in the display are replaced with the truncatedRowText value. Defaults to "•".
+ */
+@property (strong, nonatomic) NSString *truncatedRowText UI_APPEARANCE_SELECTOR;
+
+/*!
  * Property to determine the verical position of the text displayed in the index bar. Defaults to `GDIIndexBarAlignmentTop`.
  */
 @property (nonatomic) GDIIndexBarAlignment verticalAlignment UI_APPEARANCE_SELECTOR;

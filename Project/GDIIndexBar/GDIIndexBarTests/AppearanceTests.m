@@ -89,4 +89,11 @@
     XCTAssertTrue([indexBar.barBackgroundColor isEqual:[UIColor orangeColor]], @"Bar background color does not match color set by appearance protocol");
 }
 
+- (void)testApperanceTruncatedRowText
+{
+    [[GDIIndexBar appearance] setTruncatedRowText:@"-"];
+    GDIIndexBar *indexBar = [[GDIIndexBar alloc] initWithTableView:_tableView];
+    XCTAssertTrue([indexBar.truncatedRowText isEqualToString:@"-"], @"Truncated text does not match expected value set by appearance protocol");
+}
+
 @end

@@ -1,5 +1,15 @@
 # GDIIndexBar CHANGELOG
 
+## 0.3.0
+
+* Adds functionality to truncate the index rows and display '•' characters where rows have been truncated in order to fit the height of the table view. 
+* Adds truncatedRowText property.
+
+## 0.2.0
+
+* Adds appearance selectors for properties
+* Adds tests for properties and appearance properties
+
 ## 0.1.0
 
 Initial release.

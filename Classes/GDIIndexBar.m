@@ -15,8 +15,9 @@
 #define kDefaultFontName @"HelveticaNeue-Bold"
 #define kDefaultFontSize 11.f
 #define kDefaultTextSpacing 2.f
+#define kDefaultTruncatedRowText @"•"
 #define kStandardButtonWidth 44.f
-#define kShowDebugOutlines 0
+#define kShowDebugOutlines 1
 
 @implementation GDIIndexBar {
     NSUInteger _numberOfIndexes;
@@ -41,6 +42,7 @@
         [appearance setTextShadowOffset:UIOffsetZero];
         [appearance setTextSpacing:kDefaultTextSpacing];
         [appearance setBarWidth:kStandardButtonWidth];
+        [appearance setTruncatedRowText:kDefaultTruncatedRowText];
         
         if ([self isOS7OrLater]) {
             UIOffset offset = UIOffsetMake(14.5f, 0.f);
@@ -170,25 +172,41 @@
 // the array if needed to fit the current viewable area.
 - (void)updateDisplayedIndexStrings
 {
-    CGFloat rowHeight = _lineHeight + _textSpacing;
-    CGFloat desiredHeight = _textSpacing * 2 + rowHeight * _numberOfIndexes;
-    if (desiredHeight > self.bounds.size.height) {
+    if ([self desiredHeight] > self.bounds.size.height) {
         
-        NSMutableArray *displayedStrings = [NSMutableArray arrayWithArray:_indexStrings];
-        NSUInteger numberOfRowsThatFit = floorf(self.bounds.size.height / rowHeight);
-        NSUInteger hiddenRows = _numberOfIndexes - numberOfRowsThatFit;
+        NSMutableArray *displayedStrings = [NSMutableArray array];
+        NSUInteger numberOfRowsThatFit = [self numberOfDisplayableRows];
+        CGFloat step = (CGFloat)_indexStrings.count / numberOfRowsThatFit;
+        CGFloat stepIndex = 0.f;
         
-        // determine which indexes will be removed from the displayed strings.
-        // divide the number of indexes by the number of hidden rows plus 2
-        // so that we may omit the first and last indexes and remove the
-        // indexes at set intervals.
-        NSUInteger indexInterval = _numberOfIndexes / (hiddenRows + 2);
-        NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-        for (int i = 0; i < hiddenRows; i++) {
-            [indexSet addIndex:indexInterval * (i+1)];
+        for (int i=0; i < numberOfRowsThatFit; i++) {
+            
+            NSUInteger letterIndex = roundf(stepIndex);
+            
+            // for every other letter, use the truncated text string instead of the actual letter.
+            if (i % 2 == 1) {
+                [displayedStrings setObject:self.truncatedRowText atIndexedSubscript:i];
+            }
+            // otherwise, store the actual letter
+            else {
+                NSString *letter;
+                if (letterIndex < _indexStrings.count) {
+                    // if this is the last letter displayed, but is not using the last letter,
+                    // then force the last letter to be displayed to footnote the bar
+                    if (i+1 == numberOfRowsThatFit && letterIndex != numberOfRowsThatFit-1) {
+                        letter = [_indexStrings lastObject];
+                    }
+                    else {
+                        letter = [_indexStrings objectAtIndex:letterIndex];
+                    }
+                }
+                else {
+                    letter = [_indexStrings lastObject];
+                }
+                [displayedStrings setObject:letter atIndexedSubscript:i];
+            }
+            stepIndex += step;
         }
-        [displayedStrings removeObjectsAtIndexes:indexSet];
-        
         _displayedIndexStrings = [NSArray arrayWithArray:displayedStrings];
     }
     else {
@@ -284,12 +302,20 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 }
 
 
+- (CGFloat)desiredHeight
+{
+    CGFloat rowHeight = _lineHeight + _textSpacing;
+    return _textSpacing * 2 + rowHeight * _numberOfIndexes;
+}
+
+
 - (NSUInteger)numberOfDisplayableRows
 {
     CGFloat rowHeight = _lineHeight + _textSpacing;
     CGFloat desiredHeight = _textSpacing * 2 + rowHeight * _numberOfIndexes;
     if (desiredHeight > self.bounds.size.height) {
-        NSUInteger numberOfRowsThatFit = floorf(self.bounds.size.height / rowHeight);
+        NSUInteger numberOfRowsThatFit = self.bounds.size.height / rowHeight;
+        numberOfRowsThatFit -= (numberOfRowsThatFit%2==0) ? 1 : 0;
         return numberOfRowsThatFit;
     }
     return _numberOfIndexes;
@@ -483,6 +509,17 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
     _textFont = textFont;
     [self didChangeValueForKey:@"textFont"];
     [self setNeedsDisplay];
+}
+
+- (NSString *)truncatedRowText
+{
+    if (_truncatedRowText == nil) {
+        _truncatedRowText = [[[self class] appearance] truncatedRowText];
+    }
+    if (_truncatedRowText != nil) {
+        return _truncatedRowText;
+    }
+    return kDefaultTruncatedRowText;
 }
 
 - (UIColor *)barBackgroundColor
