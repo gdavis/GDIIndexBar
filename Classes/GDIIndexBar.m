@@ -17,7 +17,7 @@
 #define kDefaultTextSpacing 2.f
 #define kDefaultTruncatedRowText @"•"
 #define kStandardButtonWidth 44.f
-#define kShowDebugOutlines 1
+#define kShowDebugOutlines 0
 
 @implementation GDIIndexBar {
     NSUInteger _numberOfIndexes;
