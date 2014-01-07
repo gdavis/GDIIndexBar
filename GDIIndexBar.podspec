@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "GDIIndexBar"
-  s.version      = "0.2.0"
+  s.version      = "0.3.0"
   s.summary      = "`GDIIndexBar` is a component for navigating sections of a `UITableView`."
   s.description  = <<-DESC
                     `GDIIndexBar` is a component for navigating sections of a `UITableView`. It reproduces the index bar seen in the Contacts app on iOS and styled to match both iOS6 and iOS7 by default. `GDIIndexBar` can also be customized through the appearance protocol or by subclassing. 
