@@ -102,7 +102,26 @@
         [self reload];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationDidChange) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(deviceOrientationDidChange)
+                                                 name:UIDeviceOrientationDidChangeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardFrameChange:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardFrameChange:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardFrameChange:)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleKeyboardFrameChange:)
+                                                 name:UIKeyboardDidHideNotification
+                                               object:nil];
 }
 
 - (void)dealloc
@@ -164,6 +183,13 @@
     if (context == kObservingContext && [keyPath isEqualToString:kObservingKeyPath] && self.superview == _tableView) {
         [self setNeedsLayout];
     }
+}
+
+#pragma mark - Keyboard 
+
+- (void)handleKeyboardFrameChange:(NSNotificationCenter *)note
+{
+    [self setNeedsLayout];
 }
 
 #pragma mark - Layout
