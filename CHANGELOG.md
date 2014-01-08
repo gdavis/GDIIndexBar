@@ -1,5 +1,9 @@
 # GDIIndexBar CHANGELOG
 
+## 0.3.2
+
+* Adds keyboard listeners and updates the layout when the keyboard shows/hides.
+
 ## 0.3.1
 
 * Fixes a crash that would occur when clicking on the truncated text string
