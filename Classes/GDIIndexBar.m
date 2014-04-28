@@ -351,6 +351,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 - (void)deviceOrientationDidChange
 {
     [self setNeedsLayout];
+    [self setNeedsDisplay];
 }
 
 
