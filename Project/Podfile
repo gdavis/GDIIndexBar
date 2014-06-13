@@ -1,4 +1,4 @@
 platform :ios, 6.0
 xcodeproj 'GDIIndexBarDemo/GDIIndexBarDemo.xcodeproj'
 
-pod "GDIIndexBar", :path => "../GDIIndexBar.podspec"
+pod 'GDIIndexBar', :path => '../GDIIndexBar.podspec'
