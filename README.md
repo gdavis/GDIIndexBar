@@ -1,6 +1,6 @@
 # GDIIndexBar - A custom index bar for iOS
 [![Build Status](https://travis-ci.org/gdavis/GDIIndexBar.png?branch=master)](https://travis-ci.org/gdavis/GDIIndexBar)
-[![Pod version](https://badge.fury.io/co/GDIIndexBar.png)](http://badge.fury.io/co/GDIIndexBar)
+[![Pod version](https://cocoapod-badges.herokuapp.com/v/GDIIndexBar/badge.png)](https://github.com/gdavis/GDIIndexBar)
 
 <table cellspacing="0" cellpadding="10px">
   <tr>
