@@ -1,5 +1,15 @@
 # GDIIndexBar CHANGELOG
 
+## 0.3.4
+
+* Only notify the delegate of index changes when the index actually changes between touch events. (thanks to Guillaume Algis <guillaume.algis@gmail.com>)
+
+## 0.3.3
+
+* Changes the index bar to only redraw when the size has changed. Improves performance when scrolling. (thanks to Donald Pinckney <donald_pinckney@icloud.com>)
+* Redraw the index bar with orientation changes. (thanks to Guillaume Algis <guillaume.algis@gmail.com>)
+* Fixes Travis build errors
+
 ## 0.3.2
 
 * Adds keyboard listeners and updates the layout when the keyboard shows/hides.
