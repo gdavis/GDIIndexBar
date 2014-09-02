@@ -3,5 +3,5 @@ xcode_project: Project/GDIIndexBar/GDIIndexBar.xcodeproj
 xcode_scheme: GDIIndexBar
 xcode_sdk: iphonesimulator
 before_install:
-	- brew update
-	- if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
+  - brew update
+  - if brew outdated | grep -qx xctool; then brew upgrade xctool; fi
