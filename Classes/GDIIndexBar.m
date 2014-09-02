@@ -445,12 +445,17 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 
 - (void)handleTouch:(UITouch *)touch
 {
+    static NSUInteger lastSelectedStringIndex = NSNotFound;
+
     if ([self.delegate respondsToSelector:@selector(indexBar:didSelectIndex:)]) {
         CGPoint touchPoint = [touch locationInView:self];
         CGRect textAreaRect = [self rectForTextArea];
         CGFloat progress = fmaxf(0.f, fminf((touchPoint.y - textAreaRect.origin.y) / textAreaRect.size.height, .999f));
         NSUInteger stringIndex = floorf(progress * _indexStrings.count);
-        [self.delegate indexBar:self didSelectIndex:stringIndex];
+        if (!(touch.phase == UITouchPhaseMoved && stringIndex == lastSelectedStringIndex)) {
+            [self.delegate indexBar:self didSelectIndex:stringIndex];
+        }
+        lastSelectedStringIndex = stringIndex;
     }
 }
 
