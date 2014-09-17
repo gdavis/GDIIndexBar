@@ -1,5 +1,8 @@
 # GDIIndexBar CHANGELOG
 
+## 0.3.5
+* Trigger a redraw of the view when reloading the index bar.
+
 ## 0.3.4
 
 * Only notify the delegate of index changes when the index actually changes between touch events. (thanks to Guillaume Algis <guillaume.algis@gmail.com>)
