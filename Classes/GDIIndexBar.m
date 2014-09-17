@@ -160,6 +160,7 @@
     }
     
     [self setNeedsLayout];
+    [self setNeedsDisplay];
 }
 
 
