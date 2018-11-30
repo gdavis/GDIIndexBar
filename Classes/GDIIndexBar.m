@@ -349,7 +349,7 @@ CGPoint CGPointAdd(CGPoint point1, CGPoint point2) {
 {
     CGFloat rowHeight = _lineHeight + _textSpacing;
     CGFloat desiredHeight = _textSpacing * 2 + rowHeight * _numberOfIndexes;
-    if (desiredHeight > self.bounds.size.height) {
+    if (desiredHeight > self.bounds.size.height && self.bounds.size.height >= rowHeight) {
         NSUInteger numberOfRowsThatFit = self.bounds.size.height / rowHeight;
         numberOfRowsThatFit -= (numberOfRowsThatFit%2==0) ? 1 : 0;
         return numberOfRowsThatFit;
